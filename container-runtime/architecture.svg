@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect width="400" height="300" fill="white"/>
+
+  <!-- Center node -->
+  <rect x="115" y="120" width="170" height="44" rx="10" fill="#0071e3"/>
+  <text x="200" y="147" text-anchor="middle" fill="white" font-size="13" font-weight="600">Container Runtime</text>
+
+  <!-- CLI -->
+  <rect x="150" y="20" width="100" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="200" y="43" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">CLI</text>
+  <line x1="200" y1="56" x2="200" y2="120" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Namespaces -->
+  <rect x="10" y="90" width="90" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="55" y="113" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">Namespaces</text>
+  <line x1="100" y1="110" x2="120" y2="130" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Cgroups -->
+  <rect x="300" y="90" width="90" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="345" y="113" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">Cgroups</text>
+  <line x1="300" y1="110" x2="280" y2="130" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Filesystem -->
+  <rect x="10" y="200" width="100" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="60" y="223" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">Filesystem</text>
+  <line x1="110" y1="215" x2="140" y2="165" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Image Unpack -->
+  <rect x="150" y="210" width="100" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="200" y="233" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">Image Unpack</text>
+  <line x1="200" y1="210" x2="200" y2="164" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Networking -->
+  <rect x="290" y="200" width="100" height="36" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+  <text x="340" y="223" text-anchor="middle" fill="#1d1d1f" font-size="11" font-weight="500">Networking</text>
+  <line x1="290" y1="215" x2="260" y2="165" stroke="#d2d2d7" stroke-width="1.5"/>
+
+  <!-- Language label -->
+  <text x="200" y="285" text-anchor="middle" fill="#86868b" font-size="10">Rust / C</text>
+</svg>

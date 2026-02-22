@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "elapsed_seconds": 0.03,
+  "total_samples": 3,
+  "stacks": [
+    {
+      "count": 3,
+      "instructions": 0,
+      "memory_delta": 0,
+      "frames": [
+        {"addr": "0x107e60610", "symbol": "sampler_main"},
+        {"addr": "0x19513fc08", "symbol": "_pthread_start"},
+        {"addr": "0x19513aba8", "symbol": "thread_start"}
+      ]
+    }
+  ]
+}

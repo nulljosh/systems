@@ -1,0 +1,85 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .phase { fill: #1a1a1a; stroke: #4a4a4a; stroke-width: 2; }
+      .done { fill: #2d5016; stroke: #4a7c2d; }
+      .current { fill: #3a3a00; stroke: #6b6b00; }
+      .future { fill: #1a1a1a; stroke: #4a4a4a; }
+      .text { fill: #e0e0e0; font-family: monospace; font-size: 14px; }
+      .title { fill: #ffffff; font-family: monospace; font-size: 20px; font-weight: bold; }
+      .arrow { stroke: #6b6b6b; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#6b6b6b" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" class="title" text-anchor="middle">nullC Compiler Architecture</text>
+  
+  <!-- Phase 1: Lexer (DONE) -->
+  <rect x="50" y="80" width="150" height="80" class="done" rx="5"/>
+  <text x="125" y="110" class="text" text-anchor="middle" font-weight="bold">PHASE 1</text>
+  <text x="125" y="130" class="text" text-anchor="middle">Lexer</text>
+  <text x="125" y="145" class="text" text-anchor="middle" font-size="11">[DONE]</text>
+  
+  <!-- Arrow 1 to 2 -->
+  <path d="M 200 120 L 250 120" class="arrow"/>
+  
+  <!-- Phase 2: Parser (CURRENT) -->
+  <rect x="250" y="80" width="150" height="80" class="current" rx="5"/>
+  <text x="325" y="110" class="text" text-anchor="middle" font-weight="bold">PHASE 2</text>
+  <text x="325" y="130" class="text" text-anchor="middle">Parser</text>
+  <text x="325" y="145" class="text" text-anchor="middle" font-size="11">[NEXT]</text>
+  
+  <!-- Arrow 2 to 3 -->
+  <path d="M 400 120 L 450 120" class="arrow"/>
+  
+  <!-- Phase 3: Semantic (FUTURE) -->
+  <rect x="450" y="80" width="150" height="80" class="future" rx="5"/>
+  <text x="525" y="110" class="text" text-anchor="middle" font-weight="bold">PHASE 3</text>
+  <text x="525" y="130" class="text" text-anchor="middle">Semantic</text>
+  <text x="525" y="145" class="text" text-anchor="middle" font-size="11">Analysis</text>
+  
+  <!-- Arrow 3 to 4 -->
+  <path d="M 525 160 L 525 200" class="arrow"/>
+  
+  <!-- Phase 4: Codegen (FUTURE) -->
+  <rect x="450" y="200" width="150" height="80" class="future" rx="5"/>
+  <text x="525" y="230" class="text" text-anchor="middle" font-weight="bold">PHASE 4</text>
+  <text x="525" y="250" class="text" text-anchor="middle">Code Gen</text>
+  <text x="525" y="265" class="text" text-anchor="middle" font-size="11">x86-64 ASM</text>
+  
+  <!-- Arrow 4 to 5 -->
+  <path d="M 450 240 L 400 240" class="arrow"/>
+  
+  <!-- Phase 5: Optimization (FUTURE) -->
+  <rect x="250" y="200" width="150" height="80" class="future" rx="5"/>
+  <text x="325" y="230" class="text" text-anchor="middle" font-weight="bold">PHASE 5</text>
+  <text x="325" y="250" class="text" text-anchor="middle">Optimize</text>
+  <text x="325" y="265" class="text" text-anchor="middle" font-size="11">Peephole</text>
+  
+  <!-- Complexity Levels -->
+  <rect x="50" y="350" width="700" height="200" class="phase" rx="5"/>
+  <text x="400" y="375" class="text" text-anchor="middle" font-weight="bold">10 Complexity Levels (see BENCHMARKS.md)</text>
+  
+  <text x="70" y="405" class="text" fill="#4a7c2d">L0: Hello World [DONE]</text>
+  <text x="70" y="425" class="text" fill="#4a7c2d">L1: Arithmetic [DONE]</text>
+  <text x="70" y="445" class="text" fill="#4a7c2d">L2: Variables [DONE]</text>
+  <text x="70" y="465" class="text">L3: Conditionals</text>
+  <text x="70" y="485" class="text">L4: Loops</text>
+  
+  <text x="270" y="405" class="text">L5: Functions</text>
+  <text x="270" y="425" class="text">L6: Recursion</text>
+  <text x="270" y="445" class="text">L7: Pointers</text>
+  <text x="270" y="465" class="text">L8: Structs</text>
+  <text x="270" y="485" class="text">L9: Strings</text>
+  
+  <text x="470" y="405" class="text" font-weight="bold">L10: Meta-Compiler</text>
+  <text x="470" y="425" class="text" font-size="11">Tokenizer in C</text>
+  <text x="470" y="440" class="text" font-size="11">Expression evaluator</text>
+  <text x="470" y="455" class="text" font-size="11">Self-hosting test</text>
+  
+  <!-- Real-World Targets -->
+  <text x="70" y="515" class="text" font-size="12" fill="#6b6b6b">Real-world: TCP server, HTTP parser, nullC compiles itself</text>
+</svg>

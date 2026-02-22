@@ -1,0 +1,12 @@
+=== CPU PROFILER SUMMARY ===
+
+Total Runtime: 0.03 seconds
+Total Samples: 6
+Unique Stack Traces: 1
+
+HOT PATHS (Top 20):
+Samples  %%         Instructions    Function
+--------+----------+---------------+---
+6        100.0      0               sampler_main
+
+=== END SUMMARY ===

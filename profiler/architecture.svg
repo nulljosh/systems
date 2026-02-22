@@ -1,0 +1,62 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, sans-serif; fill: #1d1d1f; }
+      .title { font-size: 24px; font-weight: 700; }
+      .subtitle { font-size: 12px; fill: #86868b; }
+      .box { fill: rgba(0, 113, 227, 0.1); stroke: #0071e3; stroke-width: 2; rx: 12; }
+      .arrow { stroke: #0071e3; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#0071e3" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="title">CPU Profiler Architecture</text>
+  <text x="600" y="60" text-anchor="middle" class="subtitle">Sampling-based performance analysis</text>
+
+  <!-- Pipeline -->
+  <rect x="50" y="100" width="200" height="80" class="box"/>
+  <text x="150" y="135" text-anchor="middle" font-size="16" font-weight="600">CPU Sampling</text>
+  <text x="150" y="155" text-anchor="middle" font-size="12" fill="#86868b">1ms intervals</text>
+
+  <line x1="250" y1="140" x2="310" y2="140" class="arrow"/>
+
+  <rect x="310" y="100" width="200" height="80" class="box"/>
+  <text x="410" y="135" text-anchor="middle" font-size="16" font-weight="600">Stack Trace</text>
+  <text x="410" y="155" text-anchor="middle" font-size="12" fill="#86868b">Call graph</text>
+
+  <line x1="510" y1="140" x2="570" y2="140" class="arrow"/>
+
+  <rect x="570" y="100" width="200" height="80" class="box"/>
+  <text x="670" y="135" text-anchor="middle" font-size="16" font-weight="600">Analysis</text>
+  <text x="670" y="155" text-anchor="middle" font-size="12" fill="#86868b">Hot paths</text>
+
+  <line x1="770" y1="140" x2="830" y2="140" class="arrow"/>
+
+  <rect x="830" y="100" width="200" height="80" class="box"/>
+  <text x="930" y="135" text-anchor="middle" font-size="16" font-weight="600">Flame Graph</text>
+  <text x="930" y="155" text-anchor="middle" font-size="12" fill="#86868b">Visualization</text>
+
+  <!-- Features -->
+  <rect x="100" y="250" width="220" height="100" class="box"/>
+  <text x="210" y="280" text-anchor="middle" font-size="14" font-weight="600">Low Overhead</text>
+  <text x="210" y="300" text-anchor="middle" font-size="11" fill="#86868b">Sampling vs instrumentation</text>
+  <text x="210" y="320" text-anchor="middle" font-size="11" fill="#86868b">&lt;1% performance impact</text>
+
+  <rect x="360" y="250" width="220" height="100" class="box"/>
+  <text x="470" y="280" text-anchor="middle" font-size="14" font-weight="600">Multiple Formats</text>
+  <text x="470" y="300" text-anchor="middle" font-size="11" fill="#86868b">JSON, text, flame graph</text>
+  <text x="470" y="320" text-anchor="middle" font-size="11" fill="#86868b">Easy integration</text>
+
+  <rect x="620" y="250" width="220" height="100" class="box"/>
+  <text x="730" y="280" text-anchor="middle" font-size="14" font-weight="600">Cross-Platform</text>
+  <text x="730" y="300" text-anchor="middle" font-size="11" fill="#86868b">macOS, Linux</text>
+  <text x="730" y="320" text-anchor="middle" font-size="11" fill="#86868b">System APIs</text>
+
+  <rect x="880" y="250" width="220" height="100" class="box"/>
+  <text x="990" y="280" text-anchor="middle" font-size="14" font-weight="600">Call Graphs</text>
+  <text x="990" y="300" text-anchor="middle" font-size="11" fill="#86868b">Full stack traces</text>
+  <text x="990" y="320" text-anchor="middle" font-size="11" fill="#86868b">Hot path detection</text>
+</svg>

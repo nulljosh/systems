@@ -1,0 +1,1 @@
+thread_start;_pthread_start;sampler_main 3
