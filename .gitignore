@@ -1,0 +1,25 @@
+# C/C++
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.out
+*.bin
+*.elf
+*.iso
+
+# Rust
+target/
+Cargo.lock
+
+# Python
+__pycache__/
+*.pyc
+
+# Build
+build/
+dist/
+
+# General
+.DS_Store
