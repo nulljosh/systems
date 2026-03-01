@@ -1,6 +1,12 @@
-# systems
+<div align="center">
+
+# Systems
+
+<img src="icon.svg" alt="Systems" width="120" />
 
 Low-level systems programming monorepo. Eight projects spanning compilers, operating systems, shells, debuggers, and more. nullC is the flagship.
+
+</div>
 
 <img src="architecture.svg" alt="Systems Architecture" width="720">
 
