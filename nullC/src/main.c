@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include "lexer.h"
 #include "parser.h"
 #include "ast.h"
@@ -85,9 +87,14 @@ int main(int argc, char **argv) {
     } else {
         // Replace .c with .s
         strncpy(asm_file, input_file, sizeof(asm_file) - 1);
+        asm_file[sizeof(asm_file) - 1] = '\0';
         char *dot = strrchr(asm_file, '.');
-        if (dot) strcpy(dot, ".s");
-        else strcat(asm_file, ".s");
+        if (dot) {
+            if ((size_t)(dot - asm_file) < sizeof(asm_file) - 2) strcpy(dot, ".s");
+        } else {
+            size_t len = strlen(asm_file);
+            if (len + 2 < sizeof(asm_file)) strcat(asm_file, ".s");
+        }
     }
 
     FILE *out = fopen(asm_file, "w");
@@ -111,17 +118,21 @@ int main(int argc, char **argv) {
     // Run peephole optimization
     char optimized_asm[256];
     snprintf(optimized_asm, sizeof(optimized_asm), "%s.opt", asm_file);
-    char peephole_cmd[512];
-    snprintf(peephole_cmd, sizeof(peephole_cmd), "./peephole %s %s 2>&1", asm_file, optimized_asm);
-    system(peephole_cmd);
-    
+    pid_t peep_pid = fork();
+    if (peep_pid == 0) {
+        char *peep_args[] = {"./peephole", asm_file, optimized_asm, NULL};
+        execvp("./peephole", peep_args);
+        _exit(127);
+    } else if (peep_pid > 0) {
+        int peep_status;
+        waitpid(peep_pid, &peep_status, 0);
+    }
+
     // Use optimized assembly if it exists
     FILE *opt_check = fopen(optimized_asm, "r");
     if (opt_check) {
         fclose(opt_check);
-        // Replace original with optimized
-        snprintf(peephole_cmd, sizeof(peephole_cmd), "mv %s %s", optimized_asm, asm_file);
-        system(peephole_cmd);
+        rename(optimized_asm, asm_file);
     }
 
     if (!asm_only) {

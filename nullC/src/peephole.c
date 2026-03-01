@@ -20,7 +20,7 @@ void trim(char *str) {
 
 int is_store_to_stack(const char *line) {
     char instr[32];
-    if (sscanf(line, " %s", instr) == 1) {
+    if (sscanf(line, " %31s", instr) == 1) {
         return strcmp(instr, "str") == 0 && strstr(line, "[sp,");
     }
     return 0;
@@ -28,7 +28,7 @@ int is_store_to_stack(const char *line) {
 
 int is_load_from_stack(const char *line) {
     char instr[32];
-    if (sscanf(line, " %s", instr) == 1) {
+    if (sscanf(line, " %31s", instr) == 1) {
         return strcmp(instr, "ldr") == 0 && strstr(line, "[sp]");
     }
     return 0;
@@ -39,8 +39,8 @@ int is_nop_sequence(const char *line1, const char *line2) {
     // This is a true no-op (store then load same register with nothing in between)
     char reg1[16], reg2[16];
     
-    if (sscanf(line1, " str %[^,]", reg1) == 1 &&
-        sscanf(line2, " ldr %[^,]", reg2) == 1 &&
+    if (sscanf(line1, " str %15[^,]", reg1) == 1 &&
+        sscanf(line2, " ldr %15[^,]", reg2) == 1 &&
         strcmp(reg1, reg2) == 0 &&
         strstr(line1, "[sp, #-16]!") &&
         strstr(line2, "[sp], #16")) {
@@ -64,7 +64,9 @@ int optimize(AsmCode *code) {
         }
         
         // Keep this line
-        strcpy(optimized.lines[optimized.count++], code->lines[i]);
+        strncpy(optimized.lines[optimized.count], code->lines[i], MAX_LINE_LEN - 1);
+        optimized.lines[optimized.count][MAX_LINE_LEN - 1] = '\0';
+        optimized.count++;
     }
     
     // Copy optimized back
