@@ -8,6 +8,9 @@
 #include <kernel/keyboard.h>
 #include <kernel/vga.h>
 #include <kernel/timer.h>
+#include <kernel/memory.h>
+#include <kernel/paging.h>
+#include <kernel/heap.h>
 #include <lib/string.h>
 #include <lib/printf.h>
 #include <system.h>
@@ -16,7 +19,7 @@
 
 static void shell_execute(const char *line) {
     if (strcmp(line, "help") == 0) {
-        kprintf("Commands: help  clear  echo [text]  time  reboot\n");
+        kprintf("Commands: help  clear  echo [text]  time  meminfo  reboot\n");
     } else if (strcmp(line, "clear") == 0) {
         vga_clear();
     } else if (strncmp(line, "echo ", 5) == 0) {
@@ -28,6 +31,20 @@ static void shell_execute(const char *line) {
         uint32_t secs  = ticks / 100;
         uint32_t ms    = (ticks % 100) * 10;
         kprintf("Uptime: %u.%02u s (%u ticks)\n", secs, ms / 10, ticks);
+    } else if (strcmp(line, "meminfo") == 0) {
+        kprintf("Physical Memory:\n");
+        kprintf("  Total frames: %u (%u MB)\n",
+                pmm_total_frames(),
+                (pmm_total_frames() * 4096u) / (1024u * 1024u));
+        kprintf("  Used frames:  %u (%u KB)\n",
+                pmm_used_frames(),
+                (pmm_used_frames() * 4096u) / 1024u);
+        kprintf("  Free frames:  %u (%u KB)\n",
+                pmm_free_frames(),
+                (pmm_free_frames() * 4096u) / 1024u);
+        kprintf("\nKernel Heap:\n");
+        kprintf("  Start:    0x%x\n", HEAP_START);
+        kprintf("  Max size: %u MB\n", HEAP_SIZE / (1024u * 1024u));
     } else if (strcmp(line, "reboot") == 0) {
         kprintf("Rebooting...\n");
         /* pulse CPU reset line via keyboard controller */

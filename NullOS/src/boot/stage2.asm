@@ -15,6 +15,9 @@ start_stage2:
     mov si, stage2_msg
     call puts_real
     
+    ; Detect memory map using BIOS int 0x15, EAX=0xE820
+    call detect_memory
+
     ; Enable A20 line
     call a20_enable
     
@@ -32,6 +35,31 @@ start_stage2:
     ; Far jump to flush pipeline and enter 32-bit mode
     jmp 0x08:protected_mode_entry
     
+; E820 memory detection
+; Writes entries to MMAP_ADDR (0x8000); count stored at MMAP_COUNT_ADDR (0x7FF0)
+MMAP_ADDR       equ 0x8000
+MMAP_COUNT_ADDR equ 0x7FF0
+
+detect_memory:
+    mov  di, MMAP_ADDR
+    xor  ebx, ebx           ; continuation value (0 = start of list)
+    xor  si, si             ; entry count
+.e820_loop:
+    mov  eax, 0xE820
+    mov  ecx, 24            ; request 24-byte entries
+    mov  edx, 0x534D4150   ; 'SMAP' signature
+    int  0x15
+    jc   .e820_done         ; carry set = error or end of list
+    cmp  eax, 0x534D4150   ; verify BIOS returned 'SMAP'
+    jne  .e820_done
+    inc  si
+    add  di, 24
+    cmp  ebx, 0             ; ebx = 0 means last entry
+    jne  .e820_loop
+.e820_done:
+    mov  [MMAP_COUNT_ADDR], si
+    ret
+
 a20_enable:
     ; Try BIOS method first
     mov ax, 0x2401

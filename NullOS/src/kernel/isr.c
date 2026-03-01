@@ -8,6 +8,7 @@
 
 #include <kernel/isr.h>
 #include <kernel/vga.h>
+#include <kernel/paging.h>
 #include <lib/string.h>
 #include <lib/stdint.h>
 
@@ -37,6 +38,17 @@ static const char *exception_names[] = {
 
 /* Common exception handler - called from isr_common with int_no + err_code */
 void isr_common_handler(uint32_t int_no, uint32_t err_code) {
+    /* ISR 14: page fault -- delegate to paging subsystem */
+    if (int_no == 14) {
+        registers_t regs;
+        memset(&regs, 0, sizeof(regs));
+        regs.int_no   = int_no;
+        regs.err_code = err_code;
+        regs.eip      = 0;  /* EIP not recoverable from this calling convention */
+        page_fault_handler(&regs);
+        return;
+    }
+
     const char *name = "Unknown";
     if (int_no < 20) {
         name = exception_names[int_no];
@@ -58,17 +70,6 @@ void isr_common_handler(uint32_t int_no, uint32_t err_code) {
         vga_putchar(n < 10 ? '0' + n : 'A' + n - 10);
     }
     vga_puts("\n");
-
-    if (int_no == 14) {
-        vga_puts("CR2:   0x");
-        uint32_t cr2;
-        asm volatile("mov %%cr2, %0" : "=r"(cr2));
-        for (int i = 28; i >= 0; i -= 4) {
-            uint32_t n = (cr2 >> i) & 0xF;
-            vga_putchar(n < 10 ? '0' + n : 'A' + n - 10);
-        }
-        vga_puts("\n");
-    }
 
     vga_puts("=====================\n");
     while (1) { asm volatile("hlt"); }

@@ -23,6 +23,8 @@ extern kmain
 _start:
     mov  esp, stack_top         ; set up 16KB stack
     xor  ebp, ebp               ; clear frame pointer
+    push ebx                    ; multiboot_info pointer (2nd arg)
+    push eax                    ; multiboot magic (1st arg)
     call kmain                  ; call C kernel main
 .hang:
     cli
