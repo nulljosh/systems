@@ -1,20 +1,22 @@
 # systems
 
-Low-level systems programming projects consolidated into a single repository.
+Low-level systems programming monorepo. Eight projects spanning compilers, operating systems, shells, debuggers, and more. nullC is the flagship.
+
+<img src="architecture.svg" alt="Systems Architecture" width="720">
 
 ## Projects
 
-| Project | Language | Description |
-|---------|----------|-------------|
-| **nullC** | C | C compiler targeting ARM64 |
-| **NullOS** | C, x86 Assembly | Custom x86 operating system (bootloader, protected mode, VGA, shell) |
-| **shell** | Python | Unix shell from scratch |
-| **debugger** | C++ | ptrace-based debugger (380 LOC) |
-| **text-editor** | Python | Terminal text editor (curses) |
-| **container-runtime** | Rust | Linux container runtime (namespaces, cgroups v2, overlay FS) |
-| **profiler** | Python, C | CPU profiler for Python and C programs (730 LOC) |
-| **static-analyzer** | Python | Python source code analyzer |
+| Project | Language | LOC | Status | Description |
+|---------|----------|-----|--------|-------------|
+| [nullC](./nullC) | C | 3952 | Complete | C compiler targeting ARM64 macOS. All 10 levels passing. Peephole optimization |
+| [NullOS](./NullOS) | C, x86 ASM | 2335 | WIP | Custom x86 OS from scratch. Two-stage bootloader, protected mode, VGA, shell. Phase 2 done |
+| [shell](./shell) | C | 845 | Complete | Unix shell in C99. Pipes, redirects, env vars, builtins, background jobs, signals |
+| [debugger](./debugger) | C++ | 402 | Complete | ptrace-based debugger. Breakpoints, single-step, registers, memory read/write |
+| [text-editor](./text-editor) | Python | 88 | Complete | Terminal editor (curses). Line numbers, search/replace, undo/redo |
+| [container-runtime](./container-runtime) | Rust | 0 | Skeleton | Linux container runtime. Namespaces, cgroups v2, overlay FS planned |
+| [profiler](./profiler) | Python, C | 1223 | Complete | CPU profiler (1ms sampling). JSON, text, flame graph output. Decorator API |
+| [static-analyzer](./static-analyzer) | Python | 64 | Stub | Python AST analyzer. Unused vars/imports detection. Needs more rules |
 
 ## License
 
-MIT 2026, Joshua Trommel
+MIT 2026 Joshua Trommel
