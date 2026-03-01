@@ -51,9 +51,14 @@ make clean
 0x00100000 ├──────────────────────────┤
            │ Kernel (loaded here)     │  ← kmain() entry point
            │ .text, .rodata, .data    │
-           │ .bss, heap               │
+           │ .bss                     │
 0x00400000 ├──────────────────────────┤
-           │ Free memory              │
+           │ Free memory (PMM bitmap) │  ← Physical frame allocator
+           │                          │
+0xC0000000 ├──────────────────────────┤
+           │ Kernel Heap (256 MB)     │  ← kmalloc/kfree, demand-paged
+0xD0000000 ├──────────────────────────┤
+           │ Reserved                 │
            └──────────────────────────┘
 ```
 
@@ -88,6 +93,7 @@ graph TD
 ### Design Decisions
 
 - **Flat memory model** -- GDT maps code and data segments across the full 4 GB address space
+- **Paging enabled** -- identity-mapped first 4MB, demand-paged kernel heap at 0xC0000000
 - **Ring 0 only** initially -- no user-mode separation until Phase 4
 - **Custom bootloader** -- no GRUB dependency, full control over the boot process
 - **Freestanding C** -- compiled with `-ffreestanding -nostdlib -nostdinc`, no libc
@@ -96,11 +102,11 @@ graph TD
 
 | Phase | What | Time Estimate |
 |-------|------|---------------|
-| Phase 1: Bootloader | Two-stage bootloader, GDT, A20 line, protected mode | 1 focused weekend |
-| Phase 2: Kernel Basics | VGA text driver, keyboard input, basic shell | 2-3 sessions |
-| Phase 3: Memory | Physical/virtual memory manager, paging, heap | 2-3 weeks |
-| Phase 4: Multitasking | Process scheduler, context switching, syscalls | 3-4 weeks |
-| Phase 5: Filesystem | FAT12/16 driver, VFS layer, disk I/O | 4-6 weeks |
+| Phase 1: Bootloader | Two-stage bootloader, GDT, A20 line, protected mode | done |
+| Phase 2: Kernel Basics | VGA text driver, keyboard input, basic shell | done |
+| Phase 3: Memory | Physical/virtual memory manager, paging, heap | done |
+| Phase 4: Multitasking | Process scheduler, context switching, syscalls | planned |
+| Phase 5: Filesystem | FAT12/16 driver, VFS layer, disk I/O | planned |
 
 **"Hello World" bootable OS in QEMU: ~1 week of evening sessions**
 

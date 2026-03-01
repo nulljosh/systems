@@ -5,17 +5,18 @@ Python source code static analyzer. AST-based. Detects unused variables/imports,
 
 ## Run
 ```bash
-cd ~/Documents/Code/static-analyzer
-python analyzer.py target.py
-python analyzer.py target.py --format json
+cd ~/Documents/Code/systems/static-analyzer
+python src/analyzer.py target.py
+python src/analyzer.py target.py --format json
+python -m pytest tests/
 ```
 
 ## Features
 - Python `ast` module parsing
-- Unused variable/import detection
-- Unreachable code detection
-- Custom rule engine
-- Text + JSON report output
+- Pluggable rule engine (`Rule` ABC, auto-registration)
+- 5 rules: W001 unused imports, W002 unused vars, W003 unreachable code, W004 variable shadowing, W005 unused args
+- Text + JSON report output (`--format json`)
+- 11 tests passing
 
 ## Status
-Done/stable. ~780 LOC Python.
+Done/stable.

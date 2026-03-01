@@ -3,12 +3,14 @@
 A minimal Linux container runtime — namespaces, cgroups, and filesystem isolation.
 
 ## Scope
-- Linux namespaces (PID, mount, network, UTS)
-- Cgroup resource limits (CPU, memory)
-- Filesystem isolation with chroot/pivot_root
-- Image unpacking (OCI/tarball)
-- Simple CLI: `mycontainer run <image> <cmd>`
-- Network setup with veth pairs (stretch goal)
+- Linux namespaces (PID, mount, network, UTS) via `clone()`
+- Cgroup v2 resource limits (CPU weight, memory max)
+- Filesystem isolation with `pivot_root` + proc/sysfs mounts
+- OCI tarball unpacking (tar + gzip)
+- CLI: `mycontainer run <image> <cmd> [--memory N] [--cpu-weight N] [--hostname S]`
+- Network setup with veth pairs (stub, stretch goal)
+
+Compiles on macOS, runs on Linux only. Tests skip gracefully on macOS.
 
 ## Learning Goals
 - Linux namespaces and what "isolation" really means

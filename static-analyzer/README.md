@@ -4,11 +4,13 @@ A Python source code static analyzer — lint-like tool that catches bugs withou
 
 ## Scope
 - Parse Python source into AST
-- Detect unused variables and imports
-- Find unreachable code
-- Type inference (basic)
-- Custom rule engine
-- Report generation (text + JSON)
+- Pluggable rule engine with 5 rules:
+  - W001: Unused imports
+  - W002: Unused variables
+  - W003: Unreachable code (after return/break/continue/raise)
+  - W004: Variable shadowing in nested scopes
+  - W005: Unused function arguments
+- Report generation (text + JSON via `--format json`)
 
 ## Learning Goals
 - Abstract syntax trees and tree walking
