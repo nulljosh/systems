@@ -1,0 +1,22 @@
+[package]
+name = "mycontainer"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal Linux container runtime"
+
+[[bin]]
+name = "mycontainer"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tar = "0.4"
+flate2 = "1"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+nix = { version = "0.29", features = ["sched", "mount", "hostname", "signal", "resource"] }
+
+[dev-dependencies]
+tempfile = "3"

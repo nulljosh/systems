@@ -1,7 +1,9 @@
-"""Static analyzer skeleton — finds unused imports and variables."""
+"""Static analyzer -- pluggable rule engine for Python source code."""
 import ast
+import json
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
+from abc import ABC, abstractmethod
 
 
 @dataclass
@@ -12,52 +14,60 @@ class Issue:
     message: str
 
 
-class UnusedImportChecker(ast.NodeVisitor):
-    """Detect imports that are never referenced."""
-    def __init__(self):
-        self.imports: dict[str, int] = {}
-        self.used: set[str] = set()
+class Rule(ABC):
+    """Base class for all analyzer rules."""
+    @abstractmethod
+    def check(self, tree: ast.AST, source: str) -> list[Issue]:
+        ...
 
-    def visit_Import(self, node):
-        for alias in node.names:
-            name = alias.asname or alias.name
-            self.imports[name] = node.lineno
 
-    def visit_ImportFrom(self, node):
-        for alias in node.names:
-            name = alias.asname or alias.name
-            self.imports[name] = node.lineno
+# Rule registry
+_rules: list[Rule] = []
 
-    def visit_Name(self, node):
-        self.used.add(node.id)
 
-    def get_issues(self) -> list[Issue]:
-        return [
-            Issue(line, 0, "W001", f"Unused import: '{name}'")
-            for name, line in self.imports.items()
-            if name not in self.used
-        ]
+def register_rule(rule: Rule):
+    """Register a rule instance with the analyzer."""
+    _rules.append(rule)
+
+
+def get_rules() -> list[Rule]:
+    """Return all registered rules."""
+    return list(_rules)
 
 
 def analyze(source: str, filename: str = "<stdin>") -> list[Issue]:
+    """Run all registered rules on the given source code."""
     tree = ast.parse(source, filename)
-    checker = UnusedImportChecker()
-    checker.visit(tree)
-    return checker.get_issues()
+    issues = []
+    for rule in _rules:
+        issues.extend(rule.check(tree, source))
+    issues.sort(key=lambda i: (i.line, i.col, i.code))
+    return issues
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: analyzer.py <file.py>")
-        sys.exit(1)
-    path = sys.argv[1]
-    with open(path) as f:
+    import argparse
+    parser = argparse.ArgumentParser(description="Static analyzer for Python")
+    parser.add_argument("file", help="Python file to analyze")
+    parser.add_argument("--format", choices=["text", "json"], default="text",
+                       help="Output format (default: text)")
+    args = parser.parse_args()
+
+    # Import rules to trigger registration
+    from src.rules import unused_imports, unused_vars, unreachable, shadow, unused_args
+
+    with open(args.file) as f:
         source = f.read()
-    issues = analyze(source, path)
-    for issue in issues:
-        print(f"{path}:{issue.line}:{issue.col} [{issue.code}] {issue.message}")
-    if not issues:
-        print("No issues found.")
+
+    issues = analyze(source, args.file)
+
+    if args.format == "json":
+        print(json.dumps([asdict(i) for i in issues], indent=2))
+    else:
+        for issue in issues:
+            print(f"{args.file}:{issue.line}:{issue.col} [{issue.code}] {issue.message}")
+        if not issues:
+            print("No issues found.")
 
 
 if __name__ == "__main__":
