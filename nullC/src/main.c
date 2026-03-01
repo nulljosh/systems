@@ -90,10 +90,18 @@ int main(int argc, char **argv) {
         asm_file[sizeof(asm_file) - 1] = '\0';
         char *dot = strrchr(asm_file, '.');
         if (dot) {
-            if ((size_t)(dot - asm_file) < sizeof(asm_file) - 2) strcpy(dot, ".s");
+            if ((size_t)(dot - asm_file) < sizeof(asm_file) - 2) {
+                dot[0] = '.';
+                dot[1] = 's';
+                dot[2] = '\0';
+            }
         } else {
             size_t len = strlen(asm_file);
-            if (len + 2 < sizeof(asm_file)) strcat(asm_file, ".s");
+            if (len + 2 < sizeof(asm_file)) {
+                asm_file[len] = '.';
+                asm_file[len + 1] = 's';
+                asm_file[len + 2] = '\0';
+            }
         }
     }
 

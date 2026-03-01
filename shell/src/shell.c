@@ -166,8 +166,10 @@ static int tokenize(const char *line, token_t *tokens, int max) {
                             p++;
                             char var[256];
                             int vl = 0;
-                            while (*p && (isalnum((unsigned char)*p) || *p == '_'))
+                            while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
+                                if (vl >= 255) break;
                                 var[vl++] = *p++;
+                            }
                             var[vl] = '\0';
                             const char *val = getenv(var);
                             if (val) {
@@ -190,8 +192,10 @@ static int tokenize(const char *line, token_t *tokens, int max) {
                     p++;
                     char var[256];
                     int vl = 0;
-                    while (*p && (isalnum((unsigned char)*p) || *p == '_'))
+                    while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
+                        if (vl >= 255) break;
                         var[vl++] = *p++;
+                    }
                     var[vl] = '\0';
                     const char *val = getenv(var);
                     if (val) {
