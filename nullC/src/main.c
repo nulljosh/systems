@@ -85,24 +85,10 @@ int main(int argc, char **argv) {
     if (asm_only && output_name) {
         snprintf(asm_file, sizeof(asm_file), "%s", output_name);
     } else {
-        // Replace .c with .s
-        strncpy(asm_file, input_file, sizeof(asm_file) - 1);
-        asm_file[sizeof(asm_file) - 1] = '\0';
-        char *dot = strrchr(asm_file, '.');
-        if (dot) {
-            if ((size_t)(dot - asm_file) < sizeof(asm_file) - 2) {
-                dot[0] = '.';
-                dot[1] = 's';
-                dot[2] = '\0';
-            }
-        } else {
-            size_t len = strlen(asm_file);
-            if (len + 2 < sizeof(asm_file)) {
-                asm_file[len] = '.';
-                asm_file[len + 1] = 's';
-                asm_file[len + 2] = '\0';
-            }
-        }
+        // Replace .c with .s (or append .s if no extension)
+        const char *dot = strrchr(input_file, '.');
+        size_t base_len = dot ? (size_t)(dot - input_file) : strlen(input_file);
+        snprintf(asm_file, sizeof(asm_file), "%.*s.s", (int)base_len, input_file);
     }
 
     FILE *out = fopen(asm_file, "w");
@@ -127,11 +113,13 @@ int main(int argc, char **argv) {
     char optimized_asm[256];
     snprintf(optimized_asm, sizeof(optimized_asm), "%s.opt", asm_file);
     pid_t peep_pid = fork();
-    if (peep_pid == 0) {
+    if (peep_pid < 0) {
+        perror("fork");
+    } else if (peep_pid == 0) {
         char *peep_args[] = {"./peephole", asm_file, optimized_asm, NULL};
         execvp("./peephole", peep_args);
         _exit(127);
-    } else if (peep_pid > 0) {
+    } else {
         int peep_status;
         waitpid(peep_pid, &peep_status, 0);
     }

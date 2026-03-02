@@ -87,7 +87,8 @@ int main(int argc, char **argv) {
     }
     
     AsmCode code = {0};
-    while (fgets(code.lines[code.count], MAX_LINE_LEN, in) && code.count < MAX_LINES) {
+    while (code.count < MAX_LINES &&
+           fgets(code.lines[code.count], MAX_LINE_LEN, in)) {
         trim(code.lines[code.count]);
         code.count++;
     }

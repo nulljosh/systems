@@ -116,6 +116,28 @@ static void reap_bg(void) {
     }
 }
 
+/* ── Variable expansion helper ──────────────────────────────────── */
+
+static const char *expand_var(const char **pp, char *buf, int *len, int max_len) {
+    const char *p = *pp;
+    p++; /* skip '$' */
+    char var[256];
+    int vl = 0;
+    while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
+        if (vl >= 255) break;
+        var[vl++] = *p++;
+    }
+    var[vl] = '\0';
+    const char *val = getenv(var);
+    if (val) {
+        int slen = strlen(val);
+        for (int i = 0; i < slen && *len < max_len - 1; i++)
+            buf[(*len)++] = val[i];
+    }
+    *pp = p;
+    return val;
+}
+
 /* ── Tokenizer ──────────────────────────────────────────────────── */
 
 static int tokenize(const char *line, token_t *tokens, int max) {
@@ -162,21 +184,7 @@ static int tokenize(const char *line, token_t *tokens, int max) {
                     p++;
                     while (*p && *p != '"') {
                         if (*p == '$') {
-                            /* expand $VAR inside double quotes */
-                            p++;
-                            char var[256];
-                            int vl = 0;
-                            while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
-                                if (vl >= 255) break;
-                                var[vl++] = *p++;
-                            }
-                            var[vl] = '\0';
-                            const char *val = getenv(var);
-                            if (val) {
-                                int slen = strlen(val);
-                                for (int i = 0; i < slen && len < MAX_LINE - 1; i++)
-                                    buf[len++] = val[i];
-                            }
+                            expand_var(&p, buf, &len, MAX_LINE);
                         } else {
                             if (len < MAX_LINE - 1) buf[len++] = *p;
                             p++;
@@ -188,21 +196,7 @@ static int tokenize(const char *line, token_t *tokens, int max) {
                         return -1;
                     }
                 } else if (*p == '$') {
-                    /* unquoted $VAR expansion */
-                    p++;
-                    char var[256];
-                    int vl = 0;
-                    while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
-                        if (vl >= 255) break;
-                        var[vl++] = *p++;
-                    }
-                    var[vl] = '\0';
-                    const char *val = getenv(var);
-                    if (val) {
-                        int slen = strlen(val);
-                        for (int i = 0; i < slen && len < MAX_LINE - 1; i++)
-                            buf[len++] = val[i];
-                    }
+                    expand_var(&p, buf, &len, MAX_LINE);
                 } else {
                     if (len < MAX_LINE - 1) buf[len++] = *p;
                     p++;
