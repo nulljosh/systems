@@ -16,10 +16,6 @@ clean:
 	rm -f $(TARGET) *.s *.o output
 
 test: $(TARGET)
-	@for f in examples/level*.c; do \
-		echo "=== $$f ==="; \
-		./$(TARGET) $$f 2>&1 || true; \
-		echo ""; \
-	done
+	@bash tests/run_tests.sh
 
 .PHONY: all clean test
