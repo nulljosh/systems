@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icon.svg" width="120" alt="nullC icon"/>
+</p>
+
 # nullC
 
 A minimal C compiler written in C. Compiles C source to ARM64 assembly on macOS.
