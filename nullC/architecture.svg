@@ -1,58 +1,131 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#86868b"/>
+    </marker>
+  </defs>
   <style>
-    text { font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    .title { font-size: 16px; font-weight: 600; fill: #1d1d1f; }
-    .label { font-size: 11px; font-weight: 500; fill: #1d1d1f; }
-    .sub { font-size: 9px; fill: #86868b; }
-    .node { fill: #f5f5f7; stroke: #d2d2d7; stroke-width: 1; rx: 8; }
-    .center { fill: #0071e3; rx: 12; }
-    .line { stroke: #d2d2d7; stroke-width: 1; fill: none; }
+    text { font-family: -apple-system, BlinkMacSystemFont, monospace; }
+    .title { font-size: 18px; font-weight: 700; fill: #f5f5f7; }
+    .subtitle { font-size: 11px; fill: #86868b; }
+    .label { font-size: 13px; font-weight: 600; fill: #f5f5f7; }
+    .sub { font-size: 10px; fill: #86868b; }
+    .node { fill: #1d1d1f; stroke: #333; stroke-width: 1; rx: 8; }
+    .flow { stroke: #86868b; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .dot-green { fill: #4ade80; }
+    .dot-orange { fill: #fbbf24; }
   </style>
-  <rect width="400" height="300" fill="white"/>
+  <rect width="800" height="400" fill="url(#bg)"/>
 
-  <!-- Center node -->
-  <rect class="center" x="155" y="125" width="90" height="40"/>
-  <text x="200" y="150" text-anchor="middle" fill="white" class="title">nullC</text>
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" class="title">nullC Architecture</text>
+  <text x="400" y="52" text-anchor="middle" class="subtitle">Minimal C Compiler -- ARM64 macOS</text>
+
+  <!-- Pipeline: C Source -> Lexer -> Parser -> AST -> Codegen -> ARM64 ASM -> Binary -->
+  <!-- C Source -->
+  <rect class="node" x="20" y="90" width="90" height="50"/>
+  <circle cx="30" cy="100" r="4" class="dot-green"/>
+  <text x="65" y="113" text-anchor="middle" class="label">C Source</text>
+  <text x="65" y="128" text-anchor="middle" class="sub">.c files</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="110" y1="115" x2="130" y2="115"/>
 
   <!-- Lexer -->
-  <rect class="node" x="20" y="30" width="100" height="44"/>
-  <text x="70" y="50" text-anchor="middle" class="label">Lexer</text>
-  <text x="70" y="63" text-anchor="middle" class="sub">Tokenization</text>
-  <line class="line" x1="120" y1="52" x2="155" y2="135"/>
+  <rect class="node" x="138" y="90" width="80" height="50"/>
+  <circle cx="148" cy="100" r="4" class="dot-green"/>
+  <text x="178" y="113" text-anchor="middle" class="label">Lexer</text>
+  <text x="178" y="128" text-anchor="middle" class="sub">Tokenize</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="218" y1="115" x2="238" y2="115"/>
 
   <!-- Parser -->
-  <rect class="node" x="150" y="20" width="100" height="44"/>
-  <text x="200" y="40" text-anchor="middle" class="label">Parser</text>
-  <text x="200" y="53" text-anchor="middle" class="sub">Syntax Analysis</text>
-  <line class="line" x1="200" y1="64" x2="200" y2="125"/>
+  <rect class="node" x="246" y="90" width="80" height="50"/>
+  <circle cx="256" cy="100" r="4" class="dot-green"/>
+  <text x="286" y="113" text-anchor="middle" class="label">Parser</text>
+  <text x="286" y="128" text-anchor="middle" class="sub">Syntax</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="326" y1="115" x2="346" y2="115"/>
 
   <!-- AST -->
-  <rect class="node" x="280" y="30" width="100" height="44"/>
-  <text x="330" y="50" text-anchor="middle" class="label">AST</text>
-  <text x="330" y="63" text-anchor="middle" class="sub">Tree Representation</text>
-  <line class="line" x1="280" y1="52" x2="245" y2="135"/>
+  <rect class="node" x="354" y="90" width="80" height="50"/>
+  <circle cx="364" cy="100" r="4" class="dot-green"/>
+  <text x="394" y="113" text-anchor="middle" class="label">AST</text>
+  <text x="394" y="128" text-anchor="middle" class="sub">Tree</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="434" y1="115" x2="454" y2="115"/>
 
   <!-- Codegen -->
-  <rect class="node" x="280" y="130" width="100" height="44"/>
-  <text x="330" y="150" text-anchor="middle" class="label">Codegen</text>
-  <text x="330" y="163" text-anchor="middle" class="sub">x86-64 Assembly</text>
-  <line class="line" x1="245" y1="145" x2="280" y2="150"/>
+  <rect class="node" x="462" y="90" width="90" height="50"/>
+  <circle cx="472" cy="100" r="4" class="dot-green"/>
+  <text x="507" y="113" text-anchor="middle" class="label">Codegen</text>
+  <text x="507" y="128" text-anchor="middle" class="sub">ARM64</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="552" y1="115" x2="572" y2="115"/>
+
+  <!-- ARM64 ASM -->
+  <rect class="node" x="580" y="90" width="90" height="50"/>
+  <circle cx="590" cy="100" r="4" class="dot-green"/>
+  <text x="625" y="113" text-anchor="middle" class="label">Assembly</text>
+  <text x="625" y="128" text-anchor="middle" class="sub">.s files</text>
+
+  <!-- Arrow -->
+  <line class="flow" x1="670" y1="115" x2="690" y2="115"/>
+
+  <!-- Binary -->
+  <rect class="node" x="698" y="90" width="80" height="50"/>
+  <circle cx="708" cy="100" r="4" class="dot-green"/>
+  <text x="738" y="113" text-anchor="middle" class="label">Binary</text>
+  <text x="738" y="128" text-anchor="middle" class="sub">Mach-O</text>
+
+  <!-- Side nodes row -->
 
   <!-- Examples -->
-  <rect class="node" x="20" y="200" width="100" height="44"/>
-  <text x="70" y="220" text-anchor="middle" class="label">Examples</text>
-  <text x="70" y="233" text-anchor="middle" class="sub">C Test Programs</text>
-  <line class="line" x1="100" y1="200" x2="175" y2="165"/>
+  <rect class="node" x="40" y="200" width="140" height="65"/>
+  <circle cx="52" cy="212" r="4" class="dot-green"/>
+  <text x="110" y="225" text-anchor="middle" class="label">Examples</text>
+  <text x="110" y="240" text-anchor="middle" class="sub">11 complexity levels</text>
+  <text x="110" y="253" text-anchor="middle" class="sub">Level 0-10 all passing</text>
+  <line stroke="#333" stroke-width="1" stroke-dasharray="4" x1="110" y1="200" x2="65" y2="140"/>
 
   <!-- Tests -->
-  <rect class="node" x="150" y="230" width="100" height="44"/>
-  <text x="200" y="250" text-anchor="middle" class="label">Tests</text>
-  <text x="200" y="263" text-anchor="middle" class="sub">10 Complexity Levels</text>
-  <line class="line" x1="200" y1="230" x2="200" y2="165"/>
+  <rect class="node" x="220" y="200" width="140" height="65"/>
+  <circle cx="232" cy="212" r="4" class="dot-green"/>
+  <text x="290" y="225" text-anchor="middle" class="label">Test Suite</text>
+  <text x="290" y="240" text-anchor="middle" class="sub">make test</text>
+  <text x="290" y="253" text-anchor="middle" class="sub">Automated validation</text>
+  <line stroke="#333" stroke-width="1" stroke-dasharray="4" x1="290" y1="200" x2="200" y2="140"/>
 
-  <!-- Build -->
-  <rect class="node" x="280" y="220" width="100" height="44"/>
-  <text x="330" y="240" text-anchor="middle" class="label">Build</text>
-  <text x="330" y="253" text-anchor="middle" class="sub">Makefile</text>
-  <line class="line" x1="280" y1="235" x2="245" y2="165"/>
+  <!-- Peephole Optimizer -->
+  <rect class="node" x="400" y="200" width="160" height="65"/>
+  <circle cx="412" cy="212" r="4" class="dot-green"/>
+  <text x="480" y="225" text-anchor="middle" class="label">Peephole Optimizer</text>
+  <text x="480" y="240" text-anchor="middle" class="sub">Redundant pair removal</text>
+  <text x="480" y="253" text-anchor="middle" class="sub">10 instructions eliminated</text>
+  <line stroke="#333" stroke-width="1" stroke-dasharray="4" x1="480" y1="200" x2="507" y2="140"/>
+
+  <!-- Future: Register Alloc -->
+  <rect class="node" x="600" y="200" width="160" height="65"/>
+  <circle cx="612" cy="212" r="4" class="dot-orange"/>
+  <text x="680" y="225" text-anchor="middle" class="label">Register Allocator</text>
+  <text x="680" y="240" text-anchor="middle" class="sub">x0-x7 temporaries</text>
+  <text x="680" y="253" text-anchor="middle" class="sub">Planned</text>
+  <line stroke="#333" stroke-width="1" stroke-dasharray="4" x1="680" y1="200" x2="625" y2="140"/>
+
+  <!-- Legend -->
+  <circle cx="40" cy="340" r="5" class="dot-green"/>
+  <text x="52" y="344" class="sub">Complete</text>
+  <circle cx="120" cy="340" r="5" class="dot-orange"/>
+  <text x="132" y="344" class="sub">Planned</text>
+
+  <!-- Stats -->
+  <text x="400" y="340" text-anchor="middle" class="sub">C99 -- ARM64 Darwin -- 10 levels -- Peephole optimization -- Educational</text>
 </svg>
