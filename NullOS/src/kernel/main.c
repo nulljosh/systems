@@ -14,6 +14,7 @@
 #include <kernel/memory.h>
 #include <kernel/paging.h>
 #include <kernel/heap.h>
+#include <drivers/serial.h>
 #include <lib/string.h>
 #include <lib/printf.h>
 
@@ -36,6 +37,7 @@ typedef struct {
 /* Kernel entry point -- called from assembly with multiboot args */
 void kmain(uint32_t magic, multiboot_info_t *mbi) {
     vga_init();
+    serial_init();
     kprintf("=== NullOS Kernel Boot ===\n");
     kprintf("Kernel entry point reached at 0x100000\n");
     kprintf("VGA text mode initialized (80x25)\n\n");

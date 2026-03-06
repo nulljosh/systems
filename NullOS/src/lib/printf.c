@@ -9,6 +9,7 @@
 #include <lib/stdarg.h>
 #include <lib/stdint.h>
 #include <kernel/vga.h>
+#include <drivers/serial.h>
 
 /* --- number formatting -------------------------------------------------- */
 
@@ -53,6 +54,7 @@ typedef struct {
 static void vga_emit(char c, void *ctx) {
     (void)ctx;
     vga_putchar(c);
+    serial_putchar(c);
 }
 
 static void str_emit(char c, void *ctx) {
