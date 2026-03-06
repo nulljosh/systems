@@ -6,7 +6,7 @@ A minimal C compiler written in C. Compiles C source to ARM64 assembly on macOS.
 
 ## Status
 
-All 11 complexity levels (0-10) compile and run correctly.
+All 11 complexity levels (0-10) compile and run correctly. ~2k lines of C99.
 
 ```
 C source -> Lexer -> Parser -> AST -> Codegen -> ARM64 Assembly -> Binary
@@ -62,6 +62,17 @@ Removes redundant store/load pairs from generated ARM64 assembly. 10 instruction
 - Constant folding (compile-time evaluation of constant expressions)
 - Dead code elimination
 - Self-hosting test (compile nullC with nullC)
+- Preprocessor (#include, #define)
+- Standard library subset (stdio.h basics)
+
+## Benchmarks
+
+| Compiler | LOC | Self-Hosting | Target |
+|----------|-----|--------------|--------|
+| TCC | ~30k | Yes | x86 |
+| chibicc | ~10k | Yes | x86-64 |
+| 8cc | ~7k | Yes | x86 |
+| **nullC** | ~2k | Goal | ARM64 |
 
 ## License
 

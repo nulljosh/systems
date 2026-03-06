@@ -6,3 +6,4 @@ peephole
 level*
 !examples/
 .DS_Store
+__pycache__/
