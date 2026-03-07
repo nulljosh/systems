@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="24" fill="#0c0c0c"/>
+  <rect x="20" y="20" width="160" height="160" rx="12" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <rect x="20" y="20" width="160" height="24" rx="12" fill="#222"/>
+  <circle cx="36" cy="32" r="4" fill="#ff5f57"/>
+  <circle cx="50" cy="32" r="4" fill="#febc2e"/>
+  <circle cx="64" cy="32" r="4" fill="#28c840"/>
+  <text x="32" y="68" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#4a9eff">BIOS</text>
+  <text x="32" y="82" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#888">0x7C00 boot sector loaded</text>
+  <text x="32" y="100" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#4a9eff">A20</text>
+  <text x="60" y="100" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#28c840"> enabled</text>
+  <text x="32" y="114" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#4a9eff">GDT</text>
+  <text x="60" y="114" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#28c840"> loaded</text>
+  <text x="32" y="128" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#4a9eff">CR0</text>
+  <text x="60" y="128" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#888"> PE bit set</text>
+  <text x="32" y="146" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#febc2e">protected mode</text>
+  <text x="32" y="164" font-family="SF Mono, Menlo, monospace" font-size="11" fill="#28c840">NullOS v1.0.0</text>
+  <rect x="32" y="168" width="8" height="2" fill="#28c840">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+  </rect>
+</svg>
