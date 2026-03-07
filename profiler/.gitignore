@@ -1,0 +1,9 @@
+# Build artifacts
+*.o
+*.dylib
+
+# Generated docs
+BUILD_SUMMARY.md
+COMPLETION_REPORT.txt
+INDEX.md
+QUICKSTART.md
