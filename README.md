@@ -31,3 +31,16 @@ Low-level systems programming monorepo. Eight projects spanning compilers, opera
 ## License
 
 MIT 2026 Joshua Trommel
+
+## Roadmap
+
+See individual project READMEs for detailed roadmaps. High-level goals:
+
+- **nullC**: ARM64 code generation, optimizer passes
+- **NullOS**: Filesystem, userspace, ELF loader
+- **shell**: v1.2 control flow (if/for/while/functions)
+- **debugger**: Breakpoint conditions, watchpoints
+- **text-editor**: Syntax highlighting, multiple buffers
+- **container-runtime**: Implementation start (namespaces, cgroups)
+- **profiler**: Flame graph output, sampling profiler
+- **static-analyzer**: Additional lint rules, config file
