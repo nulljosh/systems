@@ -26,4 +26,4 @@ make && bash tests/test_shell.sh
 ```
 
 ## Status
-v2.0.0 -- C99 rewrite. Python version archived in `python/`.
+v1.0.0 -- C99 interactive shell. Single-file architecture.

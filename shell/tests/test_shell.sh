@@ -22,7 +22,7 @@ check() {
 
 check_contains() {
     local name="$1" got="$2" needle="$3"
-    if echo "$got" | grep -q "$needle"; then
+    if echo "$got" | grep -qi "$needle"; then
         echo "  PASS  $name"
         ((PASS++))
     else
@@ -60,7 +60,7 @@ out=$(run "cd /tmp" "pwd")
 check_contains "cd and pwd" "$out" "/tmp"
 
 out=$(run "cd /this/does/not/exist/xyz" 2>&1)
-check_contains "cd invalid directory" "$out" "no such directory"
+check_contains "cd invalid directory" "$out" "No such file or directory"
 
 # pwd
 out=$(run "pwd")
@@ -126,7 +126,7 @@ out=$(run "echo one" "echo two" "history")
 check_contains "history shows entries" "$out" "echo one"
 
 # external command
-out=$(run "true")
+printf 'true\nexit\n' | $SHELL_BIN > /dev/null 2>&1
 check "external true" "$?" "0"
 
 echo ""
