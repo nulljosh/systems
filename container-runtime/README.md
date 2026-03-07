@@ -1,4 +1,8 @@
+![Container Runtime](icon.svg)
+
 # Container Runtime
+
+![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
 A minimal Linux container runtime — namespaces, cgroups, and filesystem isolation.
 

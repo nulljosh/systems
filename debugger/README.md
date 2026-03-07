@@ -1,4 +1,8 @@
-# Minimal C Debugger
+![Debugger](icon.svg)
+
+# Debugger
+
+![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
 **380 lines. ptrace-based. Works.**
 

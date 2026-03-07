@@ -1,4 +1,8 @@
-# CPU Profiler
+![Profiler](icon.svg)
+
+# Profiler
+
+![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
 A high-performance CPU profiler for Python + C that provides detailed insights into:
 

@@ -4,6 +4,8 @@
 
 # nullC
 
+![version](https://img.shields.io/badge/version-v1.0.0-blue)
+
 A minimal C compiler written in C. Compiles C source to ARM64 assembly on macOS.
 
 ![Architecture](architecture.svg)

@@ -1,4 +1,8 @@
+![Static Analyzer](icon.svg)
+
 # Static Analyzer
+
+![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
 A Python source code static analyzer — lint-like tool that catches bugs without running code.
 

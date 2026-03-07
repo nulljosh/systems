@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="24" fill="#0c0c0c"/>
+  <rect x="20" y="20" width="160" height="160" rx="12" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <rect x="20" y="20" width="160" height="24" rx="12" fill="#222"/>
+  <circle cx="36" cy="32" r="4" fill="#ff5f57"/>
+  <circle cx="50" cy="32" r="4" fill="#febc2e"/>
+  <circle cx="64" cy="32" r="4" fill="#28c840"/>
+  <text x="32" y="66" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#28c840">$</text>
+  <text x="44" y="66" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#ccc"> analyze app.py</text>
+  <text x="32" y="84" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#febc2e">W001</text>
+  <text x="68" y="84" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#888"> unused import</text>
+  <text x="40" y="98" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#555">L3: import sys</text>
+  <text x="32" y="116" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#febc2e">W002</text>
+  <text x="68" y="116" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#888"> unused variable</text>
+  <text x="40" y="130" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#555">L7: tmp = 42</text>
+  <text x="32" y="148" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#ff5f57">W003</text>
+  <text x="68" y="148" font-family="SF Mono, Menlo, monospace" font-size="10" fill="#888"> unreachable</text>
+  <text x="40" y="162" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#555">L12: after return</text>
+  <text x="32" y="176" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#888">3 warnings found</text>
+</svg>

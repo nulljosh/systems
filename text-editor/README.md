@@ -1,4 +1,8 @@
+![Text Editor](icon.svg)
+
 # Text Editor
+
+![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
 A terminal-based text editor built with Python and curses, inspired by nano/vim.
 
