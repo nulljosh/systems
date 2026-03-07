@@ -23,6 +23,11 @@ Low-level systems programming monorepo. Eight projects spanning compilers, opera
 | [profiler](./profiler) | Python, C | 1223 | Complete | CPU profiler (1ms sampling). JSON, text, flame graph output. Decorator API |
 | [static-analyzer](./static-analyzer) | Python | 64 | Stub | Python AST analyzer. Unused vars/imports detection. Needs more rules |
 
+## Recent Changes
+
+- Removed tracked build artifacts (binaries, .o, .dylib, generated docs) from debugger and profiler
+- Added per-project .gitignore files for debugger and profiler
+
 ## License
 
 MIT 2026 Joshua Trommel
