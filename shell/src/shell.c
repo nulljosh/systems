@@ -773,8 +773,80 @@ static int read_line_editor(const char *prompt, char *out, int outsz) {
 /* Variable expansion helper                                                  */
 /* -------------------------------------------------------------------------- */
 
+static void expand_cmd_sub(const char **pp, char *buf, int *len, int max_len) {
+    const char *p = *pp;
+    p += 2; /* skip '$(' */
+
+    /* find matching close paren, respecting nesting */
+    int depth = 1;
+    const char *start = p;
+    while (*p && depth > 0) {
+        if (*p == '(' && *(p - 1) == '$') depth++;
+        else if (*p == '(') depth++;
+        else if (*p == ')') depth--;
+        if (depth > 0) p++;
+    }
+
+    char cmd[MAX_LINE];
+    int cmdlen = (int)(p - start);
+    if (cmdlen >= MAX_LINE) cmdlen = MAX_LINE - 1;
+    memcpy(cmd, start, (size_t)cmdlen);
+    cmd[cmdlen] = '\0';
+
+    if (*p == ')') p++;
+    *pp = p;
+
+    int pipefd[2];
+    if (pipe(pipefd) < 0) return;
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        close(pipefd[0]);
+        close(pipefd[1]);
+        return;
+    }
+
+    if (pid == 0) {
+        close(pipefd[0]);
+        dup2(pipefd[1], STDOUT_FILENO);
+        close(pipefd[1]);
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTSTP, SIG_DFL);
+        execl("/bin/sh", "sh", "-c", cmd, (char *)NULL);
+        _exit(127);
+    }
+
+    close(pipefd[1]);
+    char rbuf[MAX_LINE];
+    ssize_t total = 0;
+    ssize_t n;
+    while ((n = read(pipefd[0], rbuf + total, (size_t)(MAX_LINE - 1 - total))) > 0) {
+        total += n;
+        if (total >= MAX_LINE - 1) break;
+    }
+    close(pipefd[0]);
+    rbuf[total] = '\0';
+
+    /* strip trailing newlines */
+    while (total > 0 && (rbuf[total - 1] == '\n' || rbuf[total - 1] == '\r'))
+        rbuf[--total] = '\0';
+
+    int status;
+    waitpid(pid, &status, 0);
+
+    for (int i = 0; i < total && *len < max_len - 1; i++)
+        buf[(*len)++] = rbuf[i];
+}
+
 static void expand_var(const char **pp, char *buf, int *len, int max_len) {
     const char *p = *pp;
+
+    /* command substitution $(...) */
+    if (*(p + 1) == '(') {
+        expand_cmd_sub(pp, buf, len, max_len);
+        return;
+    }
+
     p++; /* skip '$' */
 
     char var[256];
@@ -915,8 +987,23 @@ static int tokenize(const char *line, token_t *tokens, int max) {
         }
 
         buf[len] = '\0';
-        tokens[n].type = TOK_WORD;
-        tokens[n].value = strdup(buf);
+
+        /* tilde expansion: ~/... -> $HOME/... */
+        if (buf[0] == '~' && (buf[1] == '/' || buf[1] == '\0')) {
+            const char *home = getenv("HOME");
+            if (home) {
+                char expanded[MAX_LINE];
+                snprintf(expanded, sizeof(expanded), "%s%s", home, buf + 1);
+                tokens[n].type = TOK_WORD;
+                tokens[n].value = strdup(expanded);
+            } else {
+                tokens[n].type = TOK_WORD;
+                tokens[n].value = strdup(buf);
+            }
+        } else {
+            tokens[n].type = TOK_WORD;
+            tokens[n].value = strdup(buf);
+        }
         if (!tokens[n].value) {
             fprintf(stderr, "shell: out of memory\n");
             return -1;
@@ -1367,6 +1454,8 @@ static int builtin_alias(command_t *cmd) {
     return 1;
 }
 
+static int builtin_source(command_t *cmd);
+
 static int try_builtin(command_t *cmd) {
     if (!cmd->argv[0]) return 0;
     if (strcmp(cmd->argv[0], "cd") == 0) return builtin_cd(cmd);
@@ -1376,6 +1465,7 @@ static int try_builtin(command_t *cmd) {
     if (strcmp(cmd->argv[0], "fg") == 0) return builtin_fg(cmd);
     if (strcmp(cmd->argv[0], "bg") == 0) return builtin_bg(cmd);
     if (strcmp(cmd->argv[0], "alias") == 0) return builtin_alias(cmd);
+    if (strcmp(cmd->argv[0], "source") == 0 || strcmp(cmd->argv[0], ".") == 0) return builtin_source(cmd);
     return 0;
 }
 
@@ -1718,12 +1808,101 @@ static void build_prompt(char *out, size_t outsz) {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Eval + source                                                              */
+/* -------------------------------------------------------------------------- */
+
+static void eval_line(const char *line) {
+    if (is_blank_line(line)) return;
+
+    char buf[MAX_LINE];
+    strlcpy_local(buf, line, sizeof(buf));
+
+    /* strip comments */
+    int in_sq = 0, in_dq = 0;
+    for (char *c = buf; *c; c++) {
+        if (*c == '\'' && !in_dq) in_sq = !in_sq;
+        else if (*c == '"' && !in_sq) in_dq = !in_dq;
+        else if (*c == '#' && !in_sq && !in_dq) { *c = '\0'; break; }
+    }
+
+    if (is_blank_line(buf)) return;
+
+    token_t tokens[MAX_TOKENS];
+    int ntok = tokenize(buf, tokens, MAX_TOKENS);
+    if (ntok < 0) {
+        free_tokens(tokens, ntok > 0 ? ntok : 0);
+        return;
+    }
+    if (ntok == 0) return;
+
+    if (expand_globs(tokens, &ntok, MAX_TOKENS) < 0) {
+        free_tokens(tokens, ntok);
+        return;
+    }
+
+    exec_command_list(tokens, ntok, buf);
+    free_tokens(tokens, ntok);
+}
+
+static int source_file(const char *path) {
+    FILE *f = fopen(path, "r");
+    if (!f) {
+        fprintf(stderr, "source: %s: %s\n", path, strerror(errno));
+        return -1;
+    }
+
+    char line[MAX_LINE];
+    while (fgets(line, sizeof(line), f)) {
+        size_t l = strlen(line);
+        if (l > 0 && line[l - 1] == '\n') line[l - 1] = '\0';
+        eval_line(line);
+    }
+
+    fclose(f);
+    return 0;
+}
+
+static int builtin_source(command_t *cmd) {
+    if (cmd->argc < 2) {
+        fprintf(stderr, "source: filename argument required\n");
+        return 1;
+    }
+    source_file(cmd->argv[1]);
+    return 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Register source builtin                                                    */
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
 /* Main loop                                                                  */
 /* -------------------------------------------------------------------------- */
 
-int main(void) {
+static void load_shellrc(void) {
+    const char *home = getenv("HOME");
+    if (!home) return;
+    char path[PATH_MAX];
+    snprintf(path, sizeof(path), "%s/.shellrc", home);
+    struct stat st;
+    if (stat(path, &st) == 0 && S_ISREG(st.st_mode)) {
+        source_file(path);
+    }
+}
+
+int main(int argc, char **argv) {
     setup_signals();
+
+    /* script mode: shell script.sh */
+    if (argc > 1) {
+        source_file(argv[1]);
+        alias_free_all();
+        hist_free_all();
+        return last_exit_status;
+    }
+
     enable_raw_mode();
+    load_shellrc();
 
     while (1) {
         if (got_sigchld) reap_bg();
@@ -1742,24 +1921,7 @@ int main(void) {
         }
 
         hist_add(line);
-
-        token_t tokens[MAX_TOKENS];
-        int ntok = tokenize(line, tokens, MAX_TOKENS);
-        if (ntok < 0) {
-            free_tokens(tokens, ntok > 0 ? ntok : 0);
-            continue;
-        }
-        if (ntok == 0) {
-            continue;
-        }
-
-        if (expand_globs(tokens, &ntok, MAX_TOKENS) < 0) {
-            free_tokens(tokens, ntok);
-            continue;
-        }
-
-        exec_command_list(tokens, ntok, line);
-        free_tokens(tokens, ntok);
+        eval_line(line);
     }
 
     disable_raw_mode();

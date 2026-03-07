@@ -129,6 +129,57 @@ check_contains "history shows entries" "$out" "echo one"
 printf 'true\nexit\n' | $SHELL_BIN > /dev/null 2>&1
 check "external true" "$?" "0"
 
+# $? exit status
+out=$(run "false" 'echo $?')
+check_contains "exit status after false" "$out" "1"
+
+out=$(run "true" 'echo $?')
+check_contains "exit status after true" "$out" "0"
+
+# && and ||
+out=$(run "true && echo and_ok")
+check_contains "logical and success" "$out" "and_ok"
+
+out=$(run "false && echo nope || echo or_ok")
+check_contains "logical or fallback" "$out" "or_ok"
+
+out=$(run "false && echo should_not_appear")
+if echo "$out" | grep -q "should_not_appear"; then
+    echo "  FAIL  logical and skip"
+    ((FAIL++))
+else
+    echo "  PASS  logical and skip"
+    ((PASS++))
+fi
+
+# tilde expansion
+out=$(run 'echo ~')
+check_contains "tilde expands to home" "$out" "$HOME"
+
+# command substitution
+out=$(run 'echo $(echo subst_ok)')
+check_contains "command substitution" "$out" "subst_ok"
+
+# source builtin
+echo 'echo sourced_value' > "$TMPF"
+out=$(printf 'source %s\nexit\n' "$TMPF" | $SHELL_BIN 2>&1 | sed 's/^[^$]*\$ //' | grep -v '^\s*$')
+check_contains "source builtin" "$out" "sourced_value"
+rm -f "$TMPF"
+
+# script mode
+echo 'echo script_output' > "$TMPF"
+out=$($SHELL_BIN "$TMPF" 2>&1)
+check_contains "script mode" "$out" "script_output"
+rm -f "$TMPF"
+
+# glob expansion
+mkdir -p /tmp/shell_glob_test
+touch /tmp/shell_glob_test/a.txt /tmp/shell_glob_test/b.txt
+out=$(run "echo /tmp/shell_glob_test/*.txt")
+check_contains "glob expansion" "$out" "/tmp/shell_glob_test/a.txt"
+check_contains "glob expansion multi" "$out" "/tmp/shell_glob_test/b.txt"
+rm -rf /tmp/shell_glob_test
+
 echo ""
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ] && exit 0 || exit 1
