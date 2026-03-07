@@ -19,6 +19,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <glob.h>
 #include <limits.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -81,6 +82,8 @@ typedef enum {
     TOK_REDIR_APPEND,
     TOK_REDIR_IN,
     TOK_BG,
+    TOK_AND,
+    TOK_OR,
 } token_type_t;
 
 typedef struct {
@@ -122,6 +125,7 @@ typedef struct {
 
 static job_t jobs[MAX_JOBS];
 static int next_job_id = 1;
+static int last_exit_status = 0;
 
 /* -------------------------------------------------------------------------- */
 /* History                                                                    */
@@ -783,15 +787,30 @@ static void expand_var(const char **pp, char *buf, int *len, int max_len) {
         }
         if (*p == '}') p++;
     } else {
-        while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
+        if (*p == '?') {
             if (vl < (int)sizeof(var) - 1) var[vl++] = *p;
             p++;
+        } else {
+            while (*p && (isalnum((unsigned char)*p) || *p == '_')) {
+                if (vl < (int)sizeof(var) - 1) var[vl++] = *p;
+                p++;
+            }
         }
     }
     var[vl] = '\0';
 
     if (vl == 0) {
         if (*len < max_len - 1) buf[(*len)++] = '$';
+        *pp = p;
+        return;
+    }
+
+    if (strcmp(var, "?") == 0) {
+        char status_buf[32];
+        snprintf(status_buf, sizeof(status_buf), "%d", last_exit_status);
+        for (const char *s = status_buf; *s && *len < max_len - 1; s++) {
+            buf[(*len)++] = *s;
+        }
         *pp = p;
         return;
     }
@@ -818,6 +837,16 @@ static int tokenize(const char *line, token_t *tokens, int max) {
         while (*p == ' ' || *p == '\t') p++;
         if (!*p || *p == '\n') break;
 
+        if (*p == '|' && *(p + 1) == '|') {
+            tokens[n++] = (token_t){TOK_OR, NULL};
+            p += 2;
+            continue;
+        }
+        if (*p == '&' && *(p + 1) == '&') {
+            tokens[n++] = (token_t){TOK_AND, NULL};
+            p += 2;
+            continue;
+        }
         if (*p == '|') {
             tokens[n++] = (token_t){TOK_PIPE, NULL};
             p++;
@@ -898,6 +927,77 @@ static int tokenize(const char *line, token_t *tokens, int max) {
     return n;
 }
 
+static int has_glob_meta(const char *s) {
+    for (; *s; s++) {
+        if (*s == '*' || *s == '?' || *s == '[') return 1;
+    }
+    return 0;
+}
+
+static int expand_globs(token_t *tokens, int *ntok, int max) {
+    int n = *ntok;
+
+    for (int i = 0; i < n; i++) {
+        if (tokens[i].type != TOK_WORD || !tokens[i].value) continue;
+        if (!has_glob_meta(tokens[i].value)) continue;
+
+        glob_t g;
+        memset(&g, 0, sizeof(g));
+        int gr = glob(tokens[i].value, GLOB_NOCHECK | GLOB_TILDE, NULL, &g);
+        if (gr == GLOB_NOMATCH) {
+            globfree(&g);
+            continue;
+        }
+        if (gr != 0) {
+            fprintf(stderr, "shell: glob failed: %s\n", tokens[i].value);
+            globfree(&g);
+            return -1;
+        }
+
+        if (g.gl_pathc == 0 ||
+            (g.gl_pathc == 1 && strcmp(g.gl_pathv[0], tokens[i].value) == 0)) {
+            globfree(&g);
+            continue;
+        }
+
+        if (n - 1 + (int)g.gl_pathc > max) {
+            fprintf(stderr, "parse error: too many tokens\n");
+            globfree(&g);
+            return -1;
+        }
+
+        char *expanded[MAX_TOKENS];
+        for (size_t j = 0; j < g.gl_pathc; j++) {
+            expanded[j] = strdup(g.gl_pathv[j]);
+            if (!expanded[j]) {
+                for (size_t k = 0; k < j; k++) free(expanded[k]);
+                fprintf(stderr, "shell: out of memory\n");
+                globfree(&g);
+                return -1;
+            }
+        }
+
+        int add = (int)g.gl_pathc - 1;
+        if (add > 0) {
+            memmove(&tokens[i + 1 + add], &tokens[i + 1],
+                    (size_t)(n - (i + 1)) * sizeof(token_t));
+        }
+
+        free(tokens[i].value);
+        for (size_t j = 0; j < g.gl_pathc; j++) {
+            tokens[i + (int)j].type = TOK_WORD;
+            tokens[i + (int)j].value = expanded[j];
+        }
+
+        n += add;
+        i += add;
+        globfree(&g);
+    }
+
+    *ntok = n;
+    return 0;
+}
+
 static void free_tokens(token_t *tokens, int ntok) {
     for (int i = 0; i < ntok; i++) {
         if (tokens[i].type == TOK_WORD) {
@@ -962,6 +1062,11 @@ static int build_pipeline(token_t *tokens, int ntok, pipeline_t *pl) {
         case TOK_BG:
             pl->bg = 1;
             break;
+
+        case TOK_AND:
+        case TOK_OR:
+            fprintf(stderr, "parse error: unexpected logical operator\n");
+            return -1;
 
         case TOK_WORD:
             if (cmd->argc >= MAX_TOKENS - 1) {
@@ -1327,22 +1432,29 @@ static void add_job(pid_t pid, const char *line) {
     fprintf(stderr, "shell: too many background jobs\n");
 }
 
-static void wait_pipeline_children(pid_t *pids, int n) {
+static int wait_pipeline_children(pid_t *pids, int n) {
+    if (n <= 0) return 0;
     int status;
     for (int i = 0; i < n; i++) {
         if (pids[i] > 0) {
             while (waitpid(pids[i], &status, 0) < 0) {
                 if (errno == EINTR) continue;
-                break;
+                return 1;
+            }
+            if (i == n - 1) {
+                if (WIFEXITED(status)) return WEXITSTATUS(status);
+                return 1;
             }
         }
     }
+    return 0;
 }
 
 static void exec_pipeline(pipeline_t *pl, const char *line) {
     int n = pl->ncmds;
 
     if (n == 1 && !pl->bg && try_builtin(&pl->cmds[0])) {
+        last_exit_status = 0;
         return;
     }
 
@@ -1405,8 +1517,64 @@ static void exec_pipeline(pipeline_t *pl, const char *line) {
     if (pl->bg) {
         add_job(last_pid, line);
     } else {
-        wait_pipeline_children(pids, pcount);
+        last_exit_status = wait_pipeline_children(pids, pcount);
     }
+}
+
+static int exec_command_list(token_t *tokens, int ntok, const char *line) {
+    if (tokens[0].type == TOK_AND || tokens[0].type == TOK_OR ||
+        tokens[ntok - 1].type == TOK_AND || tokens[ntok - 1].type == TOK_OR) {
+        fprintf(stderr, "parse error: unexpected logical operator\n");
+        return -1;
+    }
+
+    for (int i = 1; i < ntok; i++) {
+        int cur_sep = (tokens[i].type == TOK_AND || tokens[i].type == TOK_OR);
+        int prev_sep = (tokens[i - 1].type == TOK_AND || tokens[i - 1].type == TOK_OR);
+        if (cur_sep && prev_sep) {
+            fprintf(stderr, "parse error: unexpected logical operator\n");
+            return -1;
+        }
+    }
+
+    int seg_start = 0;
+    token_type_t prev_sep = TOK_WORD;
+
+    for (int i = 0; i <= ntok; i++) {
+        int is_sep = (i < ntok) && (tokens[i].type == TOK_AND || tokens[i].type == TOK_OR);
+        if (!is_sep && i != ntok) continue;
+
+        int should_exec = 1;
+        if (seg_start > 0) {
+            if (prev_sep == TOK_AND) {
+                should_exec = (last_exit_status == 0);
+            } else if (prev_sep == TOK_OR) {
+                should_exec = (last_exit_status != 0);
+            }
+        }
+
+        if (should_exec) {
+            pipeline_t pl;
+            int seg_ntok = i - seg_start;
+            if (build_pipeline(tokens + seg_start, seg_ntok, &pl) < 0) {
+                return -1;
+            }
+
+            if (pl.cmds[0].argc > 0 && alias_expand_pipeline(&pl) == 0) {
+                exec_pipeline(&pl, line);
+            }
+            free_pipeline_owned(&pl);
+        }
+
+        if (i == ntok) {
+            break;
+        }
+
+        prev_sep = tokens[i].type;
+        seg_start = i + 1;
+    }
+
+    return 0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1585,22 +1753,12 @@ int main(void) {
             continue;
         }
 
-        pipeline_t pl;
-        if (build_pipeline(tokens, ntok, &pl) < 0) {
+        if (expand_globs(tokens, &ntok, MAX_TOKENS) < 0) {
             free_tokens(tokens, ntok);
             continue;
         }
 
-        if (pl.cmds[0].argc == 0) {
-            free_tokens(tokens, ntok);
-            continue;
-        }
-
-        if (alias_expand_pipeline(&pl) == 0) {
-            exec_pipeline(&pl, line);
-        }
-
-        free_pipeline_owned(&pl);
+        exec_command_list(tokens, ntok, line);
         free_tokens(tokens, ntok);
     }
 
