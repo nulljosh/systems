@@ -1,3 +1,4 @@
 /shell
 *.o
 *.dSYM/
+__pycache__/

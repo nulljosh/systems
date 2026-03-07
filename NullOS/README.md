@@ -1,15 +1,10 @@
+![NullOS](icon.svg)
+
 # NullOS
 
+![version](https://img.shields.io/badge/version-v1.0.0-blue)
+
 Custom 32-bit x86 hobby OS written in C and NASM.
-
-## Verified Status (March 6, 2026)
-
-This is what was verified in this workspace:
-
-- `make` succeeds and produces `build/kernel/kernel.elf`.
-- `make image` succeeds and produces `build/nullos.img`.
-- `make run` currently fails on this machine because `qemu-system-i386` is not installed.
-- Headless serial output support is now implemented in `src/drivers/serial.c`, and `kprintf` mirrors output to COM1 after `serial_init()`.
 
 ## Toolchain (macOS)
 
