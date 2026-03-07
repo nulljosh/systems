@@ -1,8 +1,0 @@
-break 0x100000488
-run
-step
-step
-step
-print $rax
-continue
-quit

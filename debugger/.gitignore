@@ -2,6 +2,4 @@
 debugger
 test_prog
 *.o
-
-# Generated docs
-DONE.txt
+*.dSYM/
