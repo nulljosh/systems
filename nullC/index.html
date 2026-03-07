@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nullC - C Compiler from Scratch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f5f5f7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #0071e3, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 8px;
+            color: #ffa500;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+        p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+        .architecture {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .architecture img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .links {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: rgba(0, 113, 227, 0.1);
+            border: 1px solid rgba(0, 113, 227, 0.5);
+            border-radius: 12px;
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: rgba(0, 113, 227, 0.2);
+            border-color: #0071e3;
+        }
+        .progress {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+        .progress h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #0071e3;
+        }
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+        .progress-label {
+            font-weight: 600;
+        }
+        .progress-status {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .complete {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #00ff00;
+        }
+        .in-progress {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+        }
+        .pending {
+            background: rgba(128, 128, 128, 0.1);
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>nullC</h1>
+        <span class="status">In Development - ARM64 Conversion</span>
+
+        <p>A C compiler built from scratch, targeting ARM64 architecture. Implements a full compilation pipeline: lexing, parsing, semantic analysis, and code generation.</p>
+
+        <div class="progress">
+            <h3>Project Status</h3>
+            <div class="progress-item">
+                <span class="progress-label">Lexer</span>
+                <span class="progress-status complete">100%</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">Parser</span>
+                <span class="progress-status complete">100%</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">ARM64 Codegen</span>
+                <span class="progress-status in-progress">30%</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">Optimization</span>
+                <span class="progress-status pending">0%</span>
+            </div>
+        </div>
+
+        <div class="progress">
+            <h3>Test Levels</h3>
+            <div class="progress-item">
+                <span class="progress-label">Level 0-2 (Hello, Arithmetic, Variables)</span>
+                <span class="progress-status complete">Working</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">Level 3-10 (Full C subset)</span>
+                <span class="progress-status in-progress">In Progress</span>
+            </div>
+        </div>
+
+        <div class="architecture">
+            <h3 style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.9);">Architecture</h3>
+            <img src="architecture.svg" alt="nullC Architecture">
+        </div>
+
+        <div class="links">
+            <a href="https://github.com/nulljosh/nullC" class="btn">View on GitHub</a>
+            <a href="README.md" class="btn">Documentation</a>
+        </div>
+    </div>
+</body>
+</html>
