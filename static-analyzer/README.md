@@ -1,4 +1,4 @@
-# Build Your Own Static Analyzer
+# Static Analyzer
 
 A Python source code static analyzer — lint-like tool that catches bugs without running code.
 

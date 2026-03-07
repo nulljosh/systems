@@ -1,4 +1,4 @@
-# Build Your Own Text Editor
+# Text Editor
 
 A terminal-based text editor built with Python and curses, inspired by nano/vim.
 

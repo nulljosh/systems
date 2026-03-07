@@ -1,6 +1,6 @@
 ![Shell](icon.svg)
 
-# Build Your Own Shell
+# Shell
 
 ![version](https://img.shields.io/badge/version-v1.0.0-blue)
 
