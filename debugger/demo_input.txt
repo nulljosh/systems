@@ -1,0 +1,9 @@
+run
+break 0x100000488
+continue
+print $rax
+step
+step
+step
+continue
+quit

@@ -1,0 +1,5 @@
+help
+break 0x100000488
+run
+continue
+quit
