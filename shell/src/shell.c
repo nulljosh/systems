@@ -1456,6 +1456,16 @@ static int builtin_alias(command_t *cmd) {
 
 static int builtin_source(command_t *cmd);
 
+static int builtin_uptime(command_t *cmd) {
+    (void)cmd;
+    FILE *fp = popen("uptime", "r");
+    if (!fp) { perror("uptime"); return 1; }
+    char buf[256];
+    while (fgets(buf, sizeof(buf), fp)) fputs(buf, stdout);
+    pclose(fp);
+    return 1;
+}
+
 static int try_builtin(command_t *cmd) {
     if (!cmd->argv[0]) return 0;
     if (strcmp(cmd->argv[0], "cd") == 0) return builtin_cd(cmd);
@@ -1465,6 +1475,7 @@ static int try_builtin(command_t *cmd) {
     if (strcmp(cmd->argv[0], "fg") == 0) return builtin_fg(cmd);
     if (strcmp(cmd->argv[0], "bg") == 0) return builtin_bg(cmd);
     if (strcmp(cmd->argv[0], "alias") == 0) return builtin_alias(cmd);
+    if (strcmp(cmd->argv[0], "uptime") == 0) return builtin_uptime(cmd);
     if (strcmp(cmd->argv[0], "source") == 0 || strcmp(cmd->argv[0], ".") == 0) return builtin_source(cmd);
     return 0;
 }
