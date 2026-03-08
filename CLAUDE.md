@@ -20,3 +20,9 @@ Low-level systems programming monorepo -- eight standalone projects.
 - Each project is standalone with its own README, CLAUDE.md, and architecture.svg
 - Makefiles for C/C++ projects
 - No shared dependencies between projects
+
+## Quick Commands
+- `./scripts/simplify.sh`
+- `./scripts/monetize.sh . --write`
+- `./scripts/audit.sh .`
+- `./scripts/ship.sh .`

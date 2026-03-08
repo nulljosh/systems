@@ -44,3 +44,9 @@ See individual project READMEs for detailed roadmaps. High-level goals:
 - **container-runtime**: Implementation start (namespaces, cgroups)
 - **profiler**: Flame graph output, sampling profiler
 - **static-analyzer**: Additional lint rules, config file
+
+## Quick Commands
+- `./scripts/simplify.sh` - normalize project structure
+- `./scripts/monetize.sh . --write` - generate monetization plan (if available)
+- `./scripts/audit.sh .` - run fast project audit (if available)
+- `./scripts/ship.sh .` - run checks and ship (if available)
