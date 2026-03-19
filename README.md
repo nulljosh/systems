@@ -13,24 +13,19 @@ Low-level systems programming monorepo. Compilers, operating systems, shells, de
 - **shell** (C) -- Unix shell. Pipes, redirects, env vars, builtins, background jobs, signals
 - **debugger** (C++) -- ptrace debugger. Breakpoints, single-step, registers, memory r/w
 - **text-editor** (Python) -- Terminal editor. Line numbers, search/replace, undo/redo
-- **container-runtime** (Rust) -- Linux container runtime (skeleton)
+- **container-runtime** (Rust) -- Linux container runtime
 - **profiler** (Python, C) -- CPU profiler. 1ms sampling, flame graph output
 - **static-analyzer** (Python) -- AST analyzer. Unused vars/imports detection
-- **memory-allocator** -- Custom memory allocator (scaffold)
-- **processor** -- CPU simulator (scaffold)
-- **emulator** -- System emulator (scaffold)
 
 ## Run
 
-Each project is standalone with its own Makefile or entry point. See individual READMEs.
+Each project is standalone. See CLAUDE.md for per-project commands.
 
 ## Roadmap
 
 - nullC: optimizer passes, more codegen targets
 - NullOS: filesystem, userspace, ELF loader
-- shell: control flow (if/for/while/functions)
 - container-runtime: namespaces, cgroups v2, overlay FS
-- static-analyzer: additional lint rules, config file
 
 ## License
 
