@@ -1,52 +1,37 @@
-<div align="center">
+![Systems](icon.svg)
 
 # Systems
 
-<img src="icon.svg" alt="Systems" width="120" />
+![version](https://img.shields.io/badge/version-v1.0.0-blue)
 
-Low-level systems programming monorepo. Eight projects spanning compilers, operating systems, shells, debuggers, and more. nullC is the flagship.
-
-</div>
-
-<img src="architecture.svg" alt="Systems Architecture" width="720">
+Low-level systems programming monorepo. Compilers, operating systems, shells, debuggers, profilers.
 
 ## Projects
 
-| Project | Language | LOC | Status | Description |
-|---------|----------|-----|--------|-------------|
-| [nullC](./nullC) | C | 3952 | Complete | C compiler targeting ARM64 macOS. All 10 levels passing. Peephole optimization |
-| [NullOS](./NullOS) | C, x86 ASM | 2335 | WIP | Custom x86 OS from scratch. Two-stage bootloader, protected mode, VGA, shell. Phase 2 done |
-| [shell](./shell) | C | 845 | Complete | Unix shell in C99. Pipes, redirects, env vars, builtins, background jobs, signals |
-| [debugger](./debugger) | C++ | 402 | Complete | ptrace-based debugger. Breakpoints, single-step, registers, memory read/write |
-| [text-editor](./text-editor) | Python | 88 | Complete | Terminal editor (curses). Line numbers, search/replace, undo/redo |
-| [container-runtime](./container-runtime) | Rust | 0 | Skeleton | Linux container runtime. Namespaces, cgroups v2, overlay FS planned |
-| [profiler](./profiler) | Python, C | 1223 | Complete | CPU profiler (1ms sampling). JSON, text, flame graph output. Decorator API |
-| [static-analyzer](./static-analyzer) | Python | 64 | Stub | Python AST analyzer. Unused vars/imports detection. Needs more rules |
+- **nullC** (C) -- C compiler targeting ARM64 macOS. All 10 levels passing. Peephole optimization
+- **NullOS** (C, x86 ASM) -- Custom x86 OS. Two-stage bootloader, protected mode, VGA, shell
+- **shell** (C) -- Unix shell. Pipes, redirects, env vars, builtins, background jobs, signals
+- **debugger** (C++) -- ptrace debugger. Breakpoints, single-step, registers, memory r/w
+- **text-editor** (Python) -- Terminal editor. Line numbers, search/replace, undo/redo
+- **container-runtime** (Rust) -- Linux container runtime (skeleton)
+- **profiler** (Python, C) -- CPU profiler. 1ms sampling, flame graph output
+- **static-analyzer** (Python) -- AST analyzer. Unused vars/imports detection
+- **memory-allocator** -- Custom memory allocator (scaffold)
+- **processor** -- CPU simulator (scaffold)
+- **emulator** -- System emulator (scaffold)
 
-## Recent Changes
+## Run
 
-- Removed tracked build artifacts (binaries, .o, .dylib, generated docs) from debugger and profiler
-- Added per-project .gitignore files for debugger and profiler
+Each project is standalone with its own Makefile or entry point. See individual READMEs.
+
+## Roadmap
+
+- nullC: optimizer passes, more codegen targets
+- NullOS: filesystem, userspace, ELF loader
+- shell: control flow (if/for/while/functions)
+- container-runtime: namespaces, cgroups v2, overlay FS
+- static-analyzer: additional lint rules, config file
 
 ## License
 
 MIT 2026 Joshua Trommel
-
-## Roadmap
-
-See individual project READMEs for detailed roadmaps. High-level goals:
-
-- **nullC**: ARM64 code generation, optimizer passes
-- **NullOS**: Filesystem, userspace, ELF loader
-- **shell**: v1.2 control flow (if/for/while/functions)
-- **debugger**: Breakpoint conditions, watchpoints
-- **text-editor**: Syntax highlighting, multiple buffers
-- **container-runtime**: Implementation start (namespaces, cgroups)
-- **profiler**: Flame graph output, sampling profiler
-- **static-analyzer**: Additional lint rules, config file
-
-## Quick Commands
-- `./scripts/simplify.sh` - normalize project structure
-- `./scripts/monetize.sh . --write` - generate monetization plan (if available)
-- `./scripts/audit.sh .` - run fast project audit (if available)
-- `./scripts/ship.sh .` - run checks and ship (if available)

@@ -1,28 +1,33 @@
-# systems
+# Systems
 
-Low-level systems programming monorepo -- eight standalone projects.
-
-## Projects
-
-- **nullC** (C) -- C compiler targeting ARM64. Flagship project. `make && ./nullc examples/hello.c`
-- **NullOS** (C, x86 ASM) -- Custom x86 OS. `make run` (requires QEMU)
-- **shell** (C) -- Unix shell. `make && ./shell`
-- **debugger** (C++) -- ptrace debugger. `make && ./debugger <program>`
-- **text-editor** (Python) -- Terminal editor. `python src/editor.py [file]`
-- **container-runtime** (Rust) -- Linux container runtime. Not yet implemented
-- **profiler** (Python, C) -- CPU profiler. `make && python profiler_cli.py`
-- **static-analyzer** (Python) -- AST analyzer. `python src/analyzer.py <file>`
-
-## Conventions
+## Rules
 
 - C99 preferred for new C code
 - Freestanding for OS code (NullOS) -- no libc
-- Each project is standalone with its own README, CLAUDE.md, and architecture.svg
+- Each project is standalone, no shared dependencies
 - Makefiles for C/C++ projects
-- No shared dependencies between projects
 
-## Quick Commands
-- `./scripts/simplify.sh`
-- `./scripts/monetize.sh . --write`
-- `./scripts/audit.sh .`
-- `./scripts/ship.sh .`
+## Run
+
+```bash
+# nullC
+cd nullC && make && ./nullc examples/hello.c
+
+# NullOS
+cd NullOS && make run  # requires QEMU
+
+# shell
+cd shell && make && ./shell
+
+# debugger
+cd debugger && make && ./debugger <program>
+
+# text-editor
+cd text-editor && python src/editor.py [file]
+
+# profiler
+cd profiler && make && python profiler_cli.py
+
+# static-analyzer
+cd static-analyzer && python src/analyzer.py <file>
+```
