@@ -1,0 +1,27 @@
+// JSON test
+
+// Create object
+let user = {
+    name: "Joshua",
+    age: 26,
+    projects: ["nullC", "nuLLM", "jot"]
+};
+
+// Stringify
+let json_str = stringify(user);
+print "JSON: " + json_str;
+
+// Parse
+let parsed = parse(json_str);
+print "Name: " + parsed.name;
+print "Age: " + str(parsed.age);
+print "Projects: " + parsed.projects[0];
+
+// Save to file
+write("/tmp/user.json", json_str);
+print "\nSaved to /tmp/user.json";
+
+// Load from file
+let loaded_json = read("/tmp/user.json");
+let loaded = parse(loaded_json);
+print "Loaded name: " + loaded.name;

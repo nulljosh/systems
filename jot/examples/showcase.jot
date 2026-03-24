@@ -1,0 +1,46 @@
+# jot v4.0 - scripting language showcase
+
+# The key difference: # comments and optional semicolons!
+
+# Variables
+let x = 10
+let y = 20
+let name = "jot"
+
+print "x + y = " + str(x + y)
+
+# Functions
+fn add(a, b) {
+    return a + b
+}
+
+print "add(5, 3) = " + str(add(5, 3))
+
+# Recursion
+fn factorial(n) {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+print "5! = " + str(factorial(5))
+
+# Arrays
+let nums = [1, 2, 3, 4, 5]
+for n in nums {
+    print "  " + str(n)
+}
+
+# Objects
+let config = {name: "jot", version: "4.0.0"}
+print config.name + " v" + config.version
+
+# Error handling
+try {
+    throw "Demo error"
+} catch (e) {
+    print "Caught: " + e
+}
+
+print "Done!"

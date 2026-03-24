@@ -1,0 +1,11 @@
+let obj = {x: 0, y: 0, z: 0}
+let i = 0
+while i < 10000 {
+    obj.x = obj.x + 1
+    obj.y = obj.y + 2
+    obj.z = obj.z + 3
+    i += 1
+}
+print obj.x
+print obj.y
+print obj.z

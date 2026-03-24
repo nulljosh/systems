@@ -1,0 +1,79 @@
+// Object Quick Start Guide for jot
+
+// 1. CREATE an object
+let person = {name: "Alice", age: 30, city: "Vancouver"};
+print person;
+
+// 2. ACCESS properties (dot notation)
+print person.name;
+print person.age;
+
+// 3. ACCESS properties (bracket notation)
+print person["city"];
+let key = "name";
+print person[key];
+
+// 4. MODIFY properties
+person.age = 31;
+print person.age;
+
+// 5. OBJECT METHODS
+print person.keys();      // Get all property names
+print person.values();    // Get all values
+print person.has("age");  // Check if property exists
+
+// 6. NESTED objects
+let user = {
+    name: "Bob",
+    profile: {
+        email: "bob@example.com",
+        verified: true
+    }
+};
+print user.profile.email;
+
+// 7. OBJECTS with ARRAYS
+let team = {
+    name: "Dev Team",
+    members: ["Alice", "Bob", "Charlie"]
+};
+print team.members[0];
+
+// 8. ARRAYS of OBJECTS
+let todos = [
+    {task: "Write code", done: true},
+    {task: "Write tests", done: false}
+];
+print todos[0].task;
+print todos[1].done;
+
+// 9. PRACTICAL EXAMPLE: Configuration
+let config = {
+    app: "MyApp",
+    database: {
+        host: "localhost",
+        port: 5432,
+        name: "mydb"
+    },
+    features: ["auth", "api", "cache"]
+};
+
+print "App: " + config.app;
+print "DB Host: " + config.database.host;
+print "Features: ";
+for feature in config.features {
+    print "  - " + feature;
+}
+
+// 10. PRACTICAL EXAMPLE: Data Processing
+let stats = {
+    users: 1000,
+    posts: 5000,
+    comments: 15000
+};
+
+let totalItems = stats.users + stats.posts + stats.comments;
+print "Total items: " + str(totalItems);
+
+let avgPostsPerUser = stats.posts / stats.users;
+print "Avg posts per user: " + str(avgPostsPerUser);

@@ -1,0 +1,45 @@
+# Class parity tests
+
+class Point {
+    fn init(x, y) {
+        this.x = x
+        this.y = y
+    }
+    fn getX() {
+        return this.x
+    }
+    fn getY() {
+        return this.y
+    }
+}
+
+let p = new Point(3, 4)
+print p.getX()
+print p.getY()
+
+# Class with mutable state
+class Counter {
+    fn init(start) {
+        this.count = start
+    }
+    fn increment() {
+        this.count = this.count + 1
+        return this.count
+    }
+    fn get() {
+        return this.count
+    }
+}
+
+let c = new Counter(0)
+print c.increment()
+print c.increment()
+print c.get()
+
+# Multiple instances
+let a = new Counter(10)
+let b = new Counter(20)
+a.increment()
+b.increment()
+print a.get()
+print b.get()

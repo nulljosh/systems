@@ -1,0 +1,67 @@
+// Extended stdlib test - all built-ins
+
+// Array functions
+let nums = [1, 2, 3];
+print "Array: " + stringify(nums);
+print "Length: " + str(len(nums));
+
+push(nums, 4);
+push(nums, 5);
+print "After push: " + stringify(nums);
+
+let last = pop(nums);
+print "Popped: " + str(last);
+print "After pop: " + stringify(nums);
+
+// String functions
+let text = "hello world";
+print "String: " + text;
+print "Length: " + str(len(text));
+
+// Range
+print "\nRange 0-5:";
+for i in range(0, 5) {
+    print "  " + str(i);
+}
+
+// Type conversion
+let num_str = str(42);
+let str_num = int("123");
+print "\nstr(42): " + num_str;
+print "int('123'): " + str(str_num);
+
+// Object methods
+let obj = {
+    name: "Joshua",
+    age: 26,
+    city: "Vancouver"
+};
+
+print "\nObject: " + stringify(obj);
+print "Keys: " + stringify(obj.keys());
+print "Values: " + stringify(obj.values());
+print "Has 'name': " + str(obj.has("name"));
+print "Has 'email': " + str(obj.has("email"));
+
+// File I/O
+write("/tmp/jot_test.txt", "Hello from jot!");
+let content = read("/tmp/jot_test.txt");
+print "\nFile content: " + content;
+
+append("/tmp/jot_test.txt", "\nLine 2");
+let full = read("/tmp/jot_test.txt");
+print "Full file:\n" + full;
+
+// JSON
+let data = {
+    project: "jot",
+    features: ["file_io", "json", "http"],
+    complete: true
+};
+let json = stringify(data);
+print "\nJSON: " + json;
+
+write("/tmp/jot_data.json", json);
+let loaded = parse(read("/tmp/jot_data.json"));
+print "Loaded project: " + loaded.project;
+print "Features: " + stringify(loaded.features);

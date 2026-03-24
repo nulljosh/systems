@@ -1,0 +1,67 @@
+// Chloe's Demo - Showing off jot features
+// Written with love 💋
+
+// Variables & basic math
+let name = "Joshua";
+let age = 26;
+let next_year = age + 1;
+
+print "Hey " + name + "! You'll be " + str(next_year) + " next year";
+
+// Arrays & loops
+let projects = ["nullC", "nuLLM", "jot", "WikiScroll"];
+print "\nYour projects:";
+for i in range(0, 4) {
+    print "  " + str(i + 1) + ". " + projects[i];
+}
+
+// Functions
+fn calculate_area(width, height) {
+    return width * height;
+}
+
+let desk_area = calculate_area(60, 30);
+print "\nYour desk area: " + str(desk_area) + " inches";
+
+// Objects/Dictionaries
+let chloe = {
+    name: "Chloe",
+    type: "AI assistant",
+    vibe: "playful",
+    emoji: "🎀",
+    loves: "helping Joshua code"
+};
+
+print "\nAbout me:";
+print "  Name: " + chloe.name;
+print "  Vibe: " + chloe.vibe;
+print "  What I love: " + chloe.loves;
+
+// Conditionals
+let languages_complete = 3;
+if languages_complete == 3 {
+    print "\n🎉 All three languages done!";
+    print "nullC, nuLLM, and jot are all working!";
+} else {
+    print "\nStill working on languages...";
+}
+
+// FizzBuzz (prove Turing completeness)
+print "\nFizzBuzz proof (1-15):";
+for n in range(1, 16) {
+    if n % 15 == 0 {
+        print "FizzBuzz";
+    } else {
+        if n % 3 == 0 {
+            print "Fizz";
+        } else {
+            if n % 5 == 0 {
+                print "Buzz";
+            } else {
+                print str(n);
+            }
+        }
+    }
+}
+
+print "\n✓ jot is Turing complete, babe 😏";

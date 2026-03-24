@@ -1,0 +1,17 @@
+// File I/O test
+
+// Write to file
+write("/tmp/test.txt", "Hello from jot!\n");
+print "Wrote to /tmp/test.txt";
+
+// Read from file
+let content = read("/tmp/test.txt");
+print "Read: " + content;
+
+// Append to file
+append("/tmp/test.txt", "Line 2\n");
+append("/tmp/test.txt", "Line 3\n");
+
+// Read again
+let full = read("/tmp/test.txt");
+print "Full content:\n" + full;

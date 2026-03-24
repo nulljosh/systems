@@ -1,0 +1,32 @@
+# String parity tests
+
+# Basic strings
+print "hello world"
+print ""
+print "escape: \n done"
+
+# String concatenation
+print "hello" + " " + "world"
+print "num: " + str(42)
+
+# String interpolation
+let name = "jot"
+let ver = 4
+print "language: ${name} v${ver}"
+print "math: ${2 + 3}"
+
+# String indexing
+let s = "abcdef"
+print s[0]
+print s[5]
+print len(s)
+
+# Slice
+print slice(s, 1, 4)
+
+# String methods
+print "Hello World".upper()
+print "Hello World".lower()
+print "  spaces  ".trim()
+print "hello".indexOf("ll")
+print "hello".replace("l", "L")

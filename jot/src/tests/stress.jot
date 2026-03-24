@@ -1,0 +1,86 @@
+# Stress tests: large arrays, deep recursion, nested loops,
+# complex interpolation, multiple class instances interacting
+
+# --- Large array (100 elements via range) ---
+let arr = range(100)
+print len(arr)
+print arr[0]
+print arr[99]
+print arr[50]
+
+let total = 0
+for i in range(10) {
+    total += i
+}
+print total
+
+# --- Deep recursion: fibonacci to depth 15 ---
+fn fib(n) {
+    if n <= 1 {
+        return n
+    }
+    return fib(n - 1) + fib(n - 2)
+}
+print fib(10)
+print fib(12)
+print fib(15)
+
+# --- Nested loops (3 deep) ---
+let count = 0
+for i in range(3) {
+    for j in range(3) {
+        for k in range(3) {
+            count += 1
+        }
+    }
+}
+print count
+
+for i in range(2) {
+    for j in range(2) {
+        for k in range(2) {
+            print str(i) + str(j) + str(k)
+        }
+    }
+}
+
+# --- Complex string interpolation chains ---
+let name = "Carl"
+let age = 26
+let city = "Zurich"
+print "Name: ${name}, Age: ${age}, City: ${city}"
+let score = 95
+print "Score: ${score}, Grade: ${score >= 90 ? "A" : "B"}"
+let sx = 10
+let sy = 20
+print "Sum: ${sx + sy}, Product: ${sx * sy}, Diff: ${sy - sx}"
+
+# --- Multiple class instances interacting ---
+class Vector {
+    fn init(x, y) {
+        this.x = x
+        this.y = y
+    }
+    fn add(other) {
+        return new Vector(this.x + other.x, this.y + other.y)
+    }
+    fn scale(factor) {
+        return new Vector(this.x * factor, this.y * factor)
+    }
+    fn magnitude() {
+        return sqrt(this.x * this.x + this.y * this.y)
+    }
+    fn describe() {
+        return "(" + str(this.x) + ", " + str(this.y) + ")"
+    }
+}
+
+let v1 = new Vector(3, 4)
+let v2 = new Vector(1, 2)
+let v3 = v1.add(v2)
+print v3.describe()
+print v1.magnitude()
+let v4 = v1.scale(2)
+print v4.describe()
+let v5 = v3.add(v4)
+print v5.describe()

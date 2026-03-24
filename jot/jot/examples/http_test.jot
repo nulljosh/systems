@@ -1,0 +1,9 @@
+// HTTP test - fetch a URL
+
+// Simple GET request (httpbin.org for testing)
+print "Fetching from httpbin.org...";
+let response = http_get("https://httpbin.org/get");
+let data = parse(response);
+
+print "Response URL: " + data.url;
+print "User-Agent: " + data.headers["User-Agent"];

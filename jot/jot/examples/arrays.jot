@@ -1,0 +1,7 @@
+// Arrays
+let nums = [1, 2, 3];
+print nums[0];
+print nums[2];
+
+let nested = [[10, 20], [30, 40]];
+print nested[1][0];

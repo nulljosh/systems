@@ -1,0 +1,36 @@
+# Function parity tests
+
+# Basic function
+fn add(a, b) {
+    return a + b
+}
+print add(3, 4)
+
+# Default parameters
+fn greet(name, greeting = "hello") {
+    return greeting + " " + name
+}
+print greet("world")
+print greet("world", "hi")
+
+# Recursion
+fn factorial(n) {
+    if n <= 1 { return 1 }
+    return n * factorial(n - 1)
+}
+print factorial(10)
+
+# First-class functions
+fn apply(f, x) {
+    return f(x)
+}
+fn double(x) { return x * 2 }
+print apply(double, 21)
+
+# Nested function calls
+fn compose(f, g, x) {
+    return f(g(x))
+}
+fn inc(x) { return x + 1 }
+print compose(double, inc, 5)
+print compose(inc, double, 5)

@@ -1,0 +1,45 @@
+# Error handling parity tests
+
+# Basic try/catch
+try {
+    throw "test error"
+} catch (e) {
+    print "caught: " + e
+}
+
+# Catch runtime error
+try {
+    let x = 10 / 0
+} catch (e) {
+    print "division caught"
+}
+
+# Nested try/catch
+try {
+    try {
+        throw "inner"
+    } catch (e) {
+        print "inner: " + e
+        throw "rethrown"
+    }
+} catch (e) {
+    print "outer: " + e
+}
+
+# Try/catch with function
+fn risky(x) {
+    if x < 0 {
+        throw "negative"
+    }
+    return x * 2
+}
+
+try {
+    print risky(5)
+    print risky(-1)
+} catch (e) {
+    print "error: " + e
+}
+
+# Control flow continues after catch
+print "after all catches"

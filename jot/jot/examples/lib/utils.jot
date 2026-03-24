@@ -1,0 +1,17 @@
+// utils.jot - Utility functions
+
+fn greet(name) {
+    return "Hello, " + name + "!";
+}
+
+fn repeat(text, n) {
+    let result = "";
+    let i = 0;
+    while i < n {
+        result = result + text;
+        i = i + 1;
+    }
+    return result;
+}
+
+print "utils.jot loaded";

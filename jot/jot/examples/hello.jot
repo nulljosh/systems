@@ -1,0 +1,10 @@
+// My first JoshLang program!
+print "Hello, World!";
+
+let name = "Joshua";
+print name;
+
+// Some math
+let x = 5;
+let y = 10;
+print x + y;

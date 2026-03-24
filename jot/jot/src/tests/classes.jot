@@ -1,0 +1,47 @@
+# Classes: class/class, new/new, this/this
+
+class Animal {
+    fn init(name, sound) {
+        this.name = name
+        this.sound = sound
+    }
+
+    fn speak() {
+        print this.name + " says " + this.sound
+    }
+}
+
+let dog = new Animal("Rex", "woof")
+let cat = new Animal("Whiskers", "meow")
+dog.speak()
+cat.speak()
+
+# property access
+print dog.name
+print cat.sound
+
+# class keyword works too
+class Counter {
+    fn init(start) {
+        this.value = start
+    }
+
+    fn increment() {
+        this.value += 1
+    }
+
+    fn get() {
+        return this.value
+    }
+}
+
+let c = new Counter(0)
+c.increment()
+c.increment()
+c.increment()
+print c.get()
+print c.value
+
+# property assignment
+c.value = 100
+print c.get()
