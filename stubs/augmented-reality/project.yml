@@ -1,0 +1,13 @@
+name: augmented-reality
+options:
+  bundleIdPrefix: com.nulljosh
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  augmented-reality:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      SWIFT_VERSION: "5.9"
+      TARGETED_DEVICE_FAMILY: "1,2"
