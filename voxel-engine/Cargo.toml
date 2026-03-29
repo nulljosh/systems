@@ -1,0 +1,11 @@
+[package]
+name = "voxel-engine"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+gl = "0.14"
+glfw = "0.55"
+nalgebra = "0.32"
+noise = "0.9"
