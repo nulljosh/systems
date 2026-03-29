@@ -1,7 +1,0 @@
-caught: test error
-division caught
-inner: inner
-outer: rethrown
-10
-error: negative
-after all catches
