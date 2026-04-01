@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "piper"
+version = "0.1.0"
+description = "CLI coding assistant powered by Arthur LLM"
+requires-python = ">=3.9"
+dependencies = [
+    "prompt_toolkit>=3.0",
+    "requests>=2.28",
+    "rich>=13.0",
+]
+
+[project.scripts]
+piper = "piper.cli:main"
