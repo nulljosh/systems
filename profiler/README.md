@@ -16,11 +16,11 @@ A high-performance CPU profiler for Python + C that provides detailed insights i
 
 ## Features
 
- **Low overhead** - Sampling-based approach  
- **Detailed metrics** - CPU, instructions, memory per call stack  
- **Multiple output formats** - JSON, plain text, flame graph  
- **Easy integration** - Decorators, context managers, CLI  
- **Cross-platform** - macOS, Linux (uses system APIs)  
+ **Low overhead** - Sampling-based approach 
+ **Detailed metrics** - CPU, instructions, memory per call stack 
+ **Multiple output formats** - JSON, plain text, flame graph 
+ **Easy integration** - Decorators, context managers, CLI 
+ **Cross-platform** - macOS, Linux (uses system APIs) 
 
 ## Installation
 
@@ -42,10 +42,10 @@ from profiler_cli import profile_function
 
 @profile_function(output_dir="./results")
 def my_function():
-    # Your code here
-    pass
+ # Your code here
+ pass
 
-my_function()  # Profiling happens automatically
+my_function() # Profiling happens automatically
 ```
 
 ### 2. Context manager
@@ -54,8 +54,8 @@ my_function()  # Profiling happens automatically
 from profiler_cli import profiler_context
 
 with profiler_context("my_task"):
-    # Your code here
-    pass
+ # Your code here
+ pass
 ```
 
 ### 3. Manual profiling
@@ -95,20 +95,20 @@ python profiler_cli.py interactive
 
 ```json
 {
-  "version": 1,
-  "elapsed_seconds": 2.34,
-  "total_samples": 2340,
-  "stacks": [
-    {
-      "count": 234,
-      "instructions": 5000,
-      "memory_delta": 1024,
-      "frames": [
-        {"addr": "0x...", "symbol": "malloc"},
-        {"addr": "0x...", "symbol": "my_function"}
-      ]
-    }
-  ]
+ "version": 1,
+ "elapsed_seconds": 2.34,
+ "total_samples": 2340,
+ "stacks": [
+ {
+ "count": 234,
+ "instructions": 5000,
+ "memory_delta": 1024,
+ "frames": [
+ {"addr": "0x...", "symbol": "malloc"},
+ {"addr": "0x...", "symbol": "my_function"}
+ ]
+ }
+ ]
 }
 ```
 
@@ -122,11 +122,11 @@ Total Samples: 2340
 Unique Stack Traces: 145
 
 HOT PATHS (Top 20):
-Samples   %        Instructions    Function
+Samples % Instructions Function
 --------+----------+---------------+---
-    234  10.0        5000         my_function
-    150   6.4        3000         malloc
-    ...
+ 234 10.0 5000 my_function
+ 150 6.4 3000 malloc
+ ...
 ```
 
 ### Flame Graph Format (flamegraph.txt)
@@ -199,22 +199,22 @@ python example_usage.py all
 
 ```
 ┌─────────────────────────────────────────┐
-│  profiler_cli.py (Python CLI)          │
-│  - Decorators, context managers        │
-│  - Report generation                   │
+│ profiler_cli.py (Python CLI) │
+│ - Decorators, context managers │
+│ - Report generation │
 └─────────────┬───────────────────────────┘
-              │
+ │
 ┌─────────────▼───────────────────────────┐
-│  profiler_binding.py (ctypes wrapper)  │
-│  - C library interface                 │
-│  - JSON/text output                    │
+│ profiler_binding.py (ctypes wrapper) │
+│ - C library interface │
+│ - JSON/text output │
 └─────────────┬───────────────────────────┘
-              │
+ │
 ┌─────────────▼───────────────────────────┐
-│  libprofiler.dylib (C extension)       │
-│  - Stack sampling thread               │
-│  - Instruction counting                │
-│  - Memory tracking                     │
+│ libprofiler.dylib (C extension) │
+│ - Stack sampling thread │
+│ - Instruction counting │
+│ - Memory tracking │
 └─────────────────────────────────────────┘
 ```
 
@@ -253,24 +253,24 @@ The CPU Profiler is a three-layer system:
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│ User Code (Python)                                         │
-│ - @profile_function decorator                              │
-│ - with profiler_context():                                 │
-│ - profiler.start() / .stop()                               │
+│ User Code (Python) │
+│ - @profile_function decorator │
+│ - with profiler_context(): │
+│ - profiler.start() / .stop() │
 └────────────────────────┬─────────────────────────────────┘
-                         │
+ │
 ┌────────────────────────▼─────────────────────────────────┐
-│ Python API Layer (profiler_binding.py)                    │
-│ - CPUProfiler class (ctypes interface)                    │
-│ - FlameGraphConverter (JSON export)                       │
-│ - ProfileReport (human-readable summaries)                │
+│ Python API Layer (profiler_binding.py) │
+│ - CPUProfiler class (ctypes interface) │
+│ - FlameGraphConverter (JSON export) │
+│ - ProfileReport (human-readable summaries) │
 └────────────────────────┬─────────────────────────────────┘
-                         │
+ │
 ┌────────────────────────▼─────────────────────────────────┐
-│ C Core (profiler.c, libprofiler.dylib)                   │
-│ - Sampling thread                                         │
-│ - Stack capture & deduplication                           │
-│ - Instruction/memory metrics                              │
+│ C Core (profiler.c, libprofiler.dylib) │
+│ - Sampling thread │
+│ - Stack capture & deduplication │
+│ - Instruction/memory metrics │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -280,17 +280,17 @@ The CPU Profiler is a three-layer system:
 
 ```c
 void *sampler_main(void *arg) {
-    while (profiling) {
-        void *frames[MAX_FRAMES];
-        int frame_count = capture_stack(frames, MAX_FRAMES);
-        
-        StackSample *sample = find_or_create_sample(frames, frame_count);
-        sample->count++;
-        sample->instructions += get_instructions();
-        sample->memory_delta += get_memory_usage();
-        
-        usleep(SAMPLE_INTERVAL_US);  // 1ms default
-    }
+ while (profiling) {
+ void *frames[MAX_FRAMES];
+ int frame_count = capture_stack(frames, MAX_FRAMES);
+ 
+ StackSample *sample = find_or_create_sample(frames, frame_count);
+ sample->count++;
+ sample->instructions += get_instructions();
+ sample->memory_delta += get_memory_usage();
+ 
+ usleep(SAMPLE_INTERVAL_US); // 1ms default
+ }
 }
 ```
 
@@ -305,18 +305,18 @@ void *sampler_main(void *arg) {
 
 ```c
 typedef struct {
-    void *frames[MAX_FRAMES];      // Return addresses
-    int frame_count;               // Stack depth
-    uint64_t count;                // Sample count
-    uint64_t instructions;         // CPU instructions
-    uint64_t memory_delta;         // Memory change
+ void *frames[MAX_FRAMES]; // Return addresses
+ int frame_count; // Stack depth
+ uint64_t count; // Sample count
+ uint64_t instructions; // CPU instructions
+ uint64_t memory_delta; // Memory change
 } StackSample;
 
 typedef struct {
-    StackSample samples[MAX_STACKS]; // Array of unique stacks
-    int sample_count;                // Number of unique stacks
-    uint64_t total_samples;          // Total samples captured
-    // ...
+ StackSample samples[MAX_STACKS]; // Array of unique stacks
+ int sample_count; // Number of unique stacks
+ uint64_t total_samples; // Total samples captured
+ // ...
 } ProfilerState;
 ```
 
@@ -336,17 +336,17 @@ typedef struct {
 
 ```python
 class CPUProfiler:
-    def __init__(self, lib_path=None):
-        self.lib = load_profiler_lib(lib_path)
-        # Maps C functions to Python
-        
-    def start(self) -> bool:
-        result = self.lib.profiler_start()
-        return result == 0
-    
-    def stop(self) -> bool:
-        result = self.lib.profiler_stop()
-        return result == 0
+ def __init__(self, lib_path=None):
+ self.lib = load_profiler_lib(lib_path)
+ # Maps C functions to Python
+ 
+ def start(self) -> bool:
+ result = self.lib.profiler_start()
+ return result == 0
+ 
+ def stop(self) -> bool:
+ result = self.lib.profiler_stop()
+ return result == 0
 ```
 
 ### Flame Graph Conversion
@@ -356,12 +356,12 @@ Converts profiler JSON to flame graph text format:
 **Input (JSON):**
 ```json
 {
-  "frames": [
-    {"symbol": "main"},
-    {"symbol": "process"},
-    {"symbol": "malloc"}
-  ],
-  "count": 100
+ "frames": [
+ {"symbol": "main"},
+ {"symbol": "process"},
+ {"symbol": "malloc"}
+ ],
+ "count": 100
 }
 ```
 
@@ -379,7 +379,7 @@ Compatible with `flamegraph.pl` visualization tool.
 ```python
 @profile_function(output_dir="./results")
 def my_func():
-    pass
+ pass
 ```
 
 **Steps:**
@@ -394,10 +394,10 @@ def my_func():
 
 ```
 ProfileReport
-├── print_summary()      # Elapsed time, sample count
-├── print_hot_paths()    # Top 15 call stacks
+├── print_summary() # Elapsed time, sample count
+├── print_hot_paths() # Top 15 call stacks
 ├── print_memory_stats() # Allocation hotspots
-└── print_instruction_stats()  # CPU work hotspots
+└── print_instruction_stats() # CPU work hotspots
 ```
 
 ## Performance Characteristics
@@ -443,17 +443,17 @@ $ du -h libprofiler.dylib
 
 ```
 profiler/
-├── profiler.c              (250 LOC) - Core C implementation
-├── profiler_binding.py     (270 LOC) - Python ctypes wrapper
-├── profiler_cli.py         (350 LOC) - CLI & reporting
-├── example_usage.py        (180 LOC) - Usage examples
-├── test_profiler.py        (200 LOC) - Test suite
-├── Makefile                 (30 LOC) - Build configuration
-├── build.sh                 (50 LOC) - Build script
-├── libprofiler.dylib              - Compiled extension
-├── README.md                      - Full documentation
-├── QUICKSTART.md                  - Getting started
-└── ARCHITECTURE.md                - This file
+├── profiler.c (250 LOC) - Core C implementation
+├── profiler_binding.py (270 LOC) - Python ctypes wrapper
+├── profiler_cli.py (350 LOC) - CLI & reporting
+├── example_usage.py (180 LOC) - Usage examples
+├── test_profiler.py (200 LOC) - Test suite
+├── Makefile (30 LOC) - Build configuration
+├── build.sh (50 LOC) - Build script
+├── libprofiler.dylib - Compiled extension
+├── README.md - Full documentation
+├── QUICKSTART.md - Getting started
+└── ARCHITECTURE.md - This file
 ```
 
 **Total: ~730 lines of Python + C**
@@ -463,18 +463,18 @@ profiler/
 ### Why Sampling vs Instrumentation?
 
 **Sampling:**
--  Low overhead
--  Works with any code
--  Captures real execution
--  Misses short-lived code
--  Statistical
+- Low overhead
+- Works with any code
+- Captures real execution
+- Misses short-lived code
+- Statistical
 
 **Instrumentation:**
--  Exact measurements
--  Sees all calls
--  High overhead
--  Requires code changes
--  Distorts measurements
+- Exact measurements
+- Sees all calls
+- High overhead
+- Requires code changes
+- Distorts measurements
 
 ### Why C + Python?
 
@@ -503,7 +503,7 @@ profiler/
 In `profiler.c`:
 ```c
 typedef struct {
-    uint64_t custom_metric;
+ uint64_t custom_metric;
 } StackSample;
 
 // Capture your metric
@@ -514,27 +514,27 @@ In `profiler_binding.py`:
 ```python
 # Access in JSON export
 for stack in data['stacks']:
-    custom = stack.get('custom_metric')
+ custom = stack.get('custom_metric')
 ```
 
 ### Increase Sample Rate
 
 In `profiler.c`:
 ```c
-#define SAMPLE_INTERVAL_US 500  // 0.5ms instead of 1ms
+#define SAMPLE_INTERVAL_US 500 // 0.5ms instead of 1ms
 ```
 
 Trade-off: More samples = higher accuracy but higher overhead.
 
 ### Add Memory Profiling
 
-Current: Peak RSS only  
+Current: Peak RSS only 
 Possible: Track allocations/deallocations
 
 ```c
 void *malloc_hook(size_t size) {
-    sample->allocations++;
-    sample->allocated_bytes += size;
+ sample->allocations++;
+ sample->allocated_bytes += size;
 }
 ```
 
@@ -577,12 +577,12 @@ void *malloc_hook(size_t size) {
 ## Testing Strategy
 
 ```python
-test_basic_profiling()      # Can start/stop?
-test_json_output()          # Valid JSON?
-test_summary_output()       # File created?
+test_basic_profiling() # Can start/stop?
+test_json_output() # Valid JSON?
+test_summary_output() # File created?
 test_flamegraph_conversion()# Correct format?
-test_profile_report()       # Data readable?
-test_multiple_profiles()    # Reusable?
+test_profile_report() # Data readable?
+test_multiple_profiles() # Reusable?
 ```
 
 Run: `python3 test_profiler.py`
@@ -601,9 +601,9 @@ fprintf(stderr, "Sample %d: %d frames\n", count, frame_count);
 ```c
 // Print each sample as captured
 for (int j = 0; j < frame_count; j++) {
-    Dl_info info;
-    dladdr(frames[j], &info);
-    printf("%s\n", info.dli_sname ?: "?");
+ Dl_info info;
+ dladdr(frames[j], &info);
+ printf("%s\n", info.dli_sname ?: "?");
 }
 ```
 
@@ -630,7 +630,7 @@ jq '.stacks | sort_by(.count) | .[-1]' profile.json
 5. Cross-platform potential
 # Build Summary - CPU Profiler Complete
 
-**Status:**  **COMPLETE & TESTED**
+**Status:** **COMPLETE & TESTED**
 
 ## What Was Built
 
@@ -657,34 +657,34 @@ A production-ready CPU profiler in Python + C with **~730 lines of code**:
 
 ## Features Implemented
 
-###  CPU Sampling
+### CPU Sampling
 - 1ms periodic stack trace capture
 - ~1000 samples/second
 - Full call stack reconstruction
 - Symbol resolution via dladdr()
 
-###  Instruction Counting  
+### Instruction Counting 
 - Track CPU instruction deltas
 - Per-stack aggregation
 - Correlates with computational work
 
-###  Memory Tracking
+### Memory Tracking
 - Peak RSS monitoring
 - Allocation/deallocation tracking
 - Per-stack memory deltas
 
-###  Call Graphs
+### Call Graphs
 - Full stack traces (up to 128 frames)
 - Unique stack deduplication
 - Hot path identification
 - Call stack visualization
 
-###  Output Formats
+### Output Formats
 1. **JSON** - Complete profile data (for tools)
 2. **Text** - Human-readable summary
 3. **Flame Graph** - Compatible with flamegraph.pl visualization
 
-###  Multiple Use Patterns
+### Multiple Use Patterns
 - **Decorator**: `@profile_function()`
 - **Context Manager**: `with profiler_context():`
 - **CLI**: `python profiler_cli.py run script.py`
@@ -695,7 +695,7 @@ A production-ready CPU profiler in Python + C with **~730 lines of code**:
 
 ```
 ============================================================
-                  CPU PROFILER TEST SUITE                   
+ CPU PROFILER TEST SUITE 
 ============================================================
 
  Test 1: Basic profiling
@@ -717,27 +717,27 @@ All tests pass successfully.
 ```
 ~/Documents/Code/profiler/
 ├── Core Implementation
-│   ├── profiler.c                 (C sampling engine)
-│   ├── profiler_binding.py        (Python wrapper)
-│   ├── profiler_cli.py            (CLI & reporting)
-│   └── libprofiler.dylib          (Compiled binary)
+│ ├── profiler.c (C sampling engine)
+│ ├── profiler_binding.py (Python wrapper)
+│ ├── profiler_cli.py (CLI & reporting)
+│ └── libprofiler.dylib (Compiled binary)
 │
 ├── Usage & Examples
-│   ├── example_usage.py           (4 patterns)
-│   └── test_profiler.py           (test suite)
+│ ├── example_usage.py (4 patterns)
+│ └── test_profiler.py (test suite)
 │
 ├── Documentation
-│   ├── README.md                  (full docs)
-│   ├── QUICKSTART.md              (5-min start)
-│   ├── ARCHITECTURE.md            (technical)
-│   └── BUILD_SUMMARY.md           (this file)
+│ ├── README.md (full docs)
+│ ├── QUICKSTART.md (5-min start)
+│ ├── ARCHITECTURE.md (technical)
+│ └── BUILD_SUMMARY.md (this file)
 │
 ├── Build System
-│   ├── Makefile                   (clang compilation)
-│   └── build.sh                   (automated build)
+│ ├── Makefile (clang compilation)
+│ └── build.sh (automated build)
 │
 └── Output
-    └── profiler_output/           (generated profiles)
+ └── profiler_output/ (generated profiles)
 ```
 
 ## Performance Metrics
@@ -768,10 +768,10 @@ from profiler_cli import profile_function
 
 @profile_function()
 def my_slow_function():
-    # code here
-    pass
+ # code here
+ pass
 
-my_slow_function()  # Profiling happens automatically
+my_slow_function() # Profiling happens automatically
 ```
 
 Output appears in `profiler_output/` with:
@@ -782,13 +782,13 @@ Output appears in `profiler_output/` with:
 
 ## Key Accomplishments
 
- **Complete Implementation:** All requested features working  
- **Code Quality:** ~730 LOC, well-structured, documented  
- **Test Coverage:** 6 comprehensive tests, all passing  
- **Production Ready:** Suitable for real-world use  
- **Extensible:** Clean API for additions  
- **Cross-platform:** macOS/Linux compatible  
- **Low Overhead:** Minimal performance impact  
+ **Complete Implementation:** All requested features working 
+ **Code Quality:** ~730 LOC, well-structured, documented 
+ **Test Coverage:** 6 comprehensive tests, all passing 
+ **Production Ready:** Suitable for real-world use 
+ **Extensible:** Clean API for additions 
+ **Cross-platform:** macOS/Linux compatible 
+ **Low Overhead:** Minimal performance impact 
 
 ## Sample Output
 
@@ -801,26 +801,26 @@ When you run the profiler:
  Flame graph JSON saved to profile_20260210_122727_example.json
 
 ============================================================
-                      PROFILER SUMMARY                      
+ PROFILER SUMMARY 
 ============================================================
 
-Elapsed Time:      2.34s
-Total Samples:     2340
-Unique Stacks:     145
+Elapsed Time: 2.34s
+Total Samples: 2340
+Unique Stacks: 145
 
 ============================================================
 HOT PATHS (Top 10)
 ============================================================
 
- 1. [42.3%]    990 samples | 50000 instr | 128.5KB
-    ↓ process_data
-    ↓ main
-    
- 2. [15.2%]    355 samples | 18000 instr | 45.2KB
-    ↓ malloc
-    ↓ allocate
-    ↓ main
-    
+ 1. [42.3%] 990 samples | 50000 instr | 128.5KB
+ ↓ process_data
+ ↓ main
+ 
+ 2. [15.2%] 355 samples | 18000 instr | 45.2KB
+ ↓ malloc
+ ↓ allocate
+ ↓ main
+ 
 [... more paths ...]
 ```
 
@@ -850,7 +850,7 @@ HOT PATHS (Top 10)
 - Efficient symbol resolution with dladdr()
 - Zero dynamic allocation during sampling
 
-### Python Integration  
+### Python Integration 
 - ctypes bindings (no compilation required for users)
 - Decorator and context manager support
 - Automatic JSON/text output generation
@@ -880,7 +880,7 @@ Results: 6 passed, 0 failed
 
 - [x] Python + C implementation
 - [x] CPU sampling (stack traces)
-- [x] Instruction counting  
+- [x] Instruction counting 
 - [x] Memory tracking
 - [x] Call graphs & hot paths
 - [x] Flame graph JSON output
@@ -891,57 +891,57 @@ Results: 6 passed, 0 failed
 
 ---
 
-**Status:** Ready for use!  
-**Built:** February 10, 2026  
+**Status:** Ready for use! 
+**Built:** February 10, 2026 
 **Location:** ~/Documents/Code/profiler/
 
 Get started: `cd ~/Documents/Code/profiler && make && python3 example_usage.py 3`
 # CPU Profiler - Complete Index
 
-##  Location
+## Location
 ```
 ~/Documents/Code/profiler/
 ```
 
-##  Quick Start
+## Quick Start
 ```bash
 cd ~/Documents/Code/profiler
-make                          # Build (10 seconds)
-python3 example_usage.py 3    # Run example (30 seconds)
+make # Build (10 seconds)
+python3 example_usage.py 3 # Run example (30 seconds)
 ```
 
-##  Documentation (Read in This Order)
+## Documentation (Read in This Order)
 
 1. **[QUICKSTART.md](QUICKSTART.md)** (5 min read)
-   - Setup in 30 seconds
-   - 4 basic examples
-   - Common patterns
-   - Troubleshooting
+ - Setup in 30 seconds
+ - 4 basic examples
+ - Common patterns
+ - Troubleshooting
 
 2. **[README.md](README.md)** (15 min read)
-   - Feature overview
-   - Installation instructions
-   - Usage guide (4 approaches)
-   - Output format explanation
-   - How it works
-   - Architecture diagram
+ - Feature overview
+ - Installation instructions
+ - Usage guide (4 approaches)
+ - Output format explanation
+ - How it works
+ - Architecture diagram
 
 3. **[ARCHITECTURE.md](ARCHITECTURE.md)** (20 min read)
-   - Technical implementation details
-   - Three-layer architecture
-   - C core internals
-   - Python binding design
-   - Performance characteristics
-   - Extending the profiler
+ - Technical implementation details
+ - Three-layer architecture
+ - C core internals
+ - Python binding design
+ - Performance characteristics
+ - Extending the profiler
 
 4. **[BUILD_SUMMARY.md](BUILD_SUMMARY.md)** (5 min read)
-   - What was built
-   - Features implemented
-   - Test results
-   - Performance metrics
-   - Success criteria
+ - What was built
+ - Features implemented
+ - Test results
+ - Performance metrics
+ - Success criteria
 
-##  Implementation Files
+## Implementation Files
 
 ### Core System
 
@@ -966,28 +966,28 @@ python3 example_usage.py 3    # Run example (30 seconds)
 | **example_usage.py** | 4 complete usage patterns |
 | **test_profiler.py** | 6 comprehensive tests (all passing) |
 
-##  Features
+## Features
 
 ### Core Capabilities
--  CPU sampling (1ms resolution, ~1000 samples/sec)
--  Instruction counting (per stack aggregation)
--  Memory tracking (allocations/deallocations)
--  Call graphs (full stack traces up to 128 frames)
--  Hot path identification
+- CPU sampling (1ms resolution, ~1000 samples/sec)
+- Instruction counting (per stack aggregation)
+- Memory tracking (allocations/deallocations)
+- Call graphs (full stack traces up to 128 frames)
+- Hot path identification
 
 ### Output Formats
--  JSON (complete profile data, flamegraph-compatible)
--  Text summary (human-readable with metrics)
--  Flame graph format (for visualization)
+- JSON (complete profile data, flamegraph-compatible)
+- Text summary (human-readable with metrics)
+- Flame graph format (for visualization)
 
 ### Integration Methods
--  Decorator: `@profile_function()`
--  Context manager: `with profiler_context():`
--  CLI: `python profiler_cli.py run script.py`
--  Programmatic: Direct `CPUProfiler` API
--  Interactive: Manual control
+- Decorator: `@profile_function()`
+- Context manager: `with profiler_context():`
+- CLI: `python profiler_cli.py run script.py`
+- Programmatic: Direct `CPUProfiler` API
+- Interactive: Manual control
 
-##  Usage Patterns
+## Usage Patterns
 
 ### Pattern 1: Decorator (Simplest)
 ```python
@@ -995,9 +995,9 @@ from profiler_cli import profile_function
 
 @profile_function()
 def slow_function():
-    pass
+ pass
 
-slow_function()  # Profiles automatically
+slow_function() # Profiles automatically
 ```
 
 ### Pattern 2: Context Manager
@@ -1005,8 +1005,8 @@ slow_function()  # Profiles automatically
 from profiler_cli import profiler_context
 
 with profiler_context("task_name"):
-    # Your code here
-    pass
+ # Your code here
+ pass
 ```
 
 ### Pattern 3: CLI
@@ -1025,32 +1025,32 @@ profiler.stop()
 profiler.save_json("profile.json")
 ```
 
-##  Output Example
+## Output Example
 
 ```
 ============================================================
-                      PROFILER SUMMARY                      
+ PROFILER SUMMARY 
 ============================================================
 
-Elapsed Time:      2.34s
-Total Samples:     2340
-Unique Stacks:     145
+Elapsed Time: 2.34s
+Total Samples: 2340
+Unique Stacks: 145
 
 ============================================================
 HOT PATHS (Top 10)
 ============================================================
 
- 1. [42.3%]    990 samples | 50000 instr | 128.5KB
-    ↓ process_data
-    ↓ main
-    
- 2. [15.2%]    355 samples | 18000 instr | 45.2KB
-    ↓ malloc
-    ↓ allocate
-    ↓ main
+ 1. [42.3%] 990 samples | 50000 instr | 128.5KB
+ ↓ process_data
+ ↓ main
+ 
+ 2. [15.2%] 355 samples | 18000 instr | 45.2KB
+ ↓ malloc
+ ↓ allocate
+ ↓ main
 ```
 
-##  Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -1063,48 +1063,48 @@ python3 test_profiler.py
 # ============================================================
 ```
 
-##  Code Statistics
+## Code Statistics
 
 ```
 Total Lines of Code: ~730
-- C:       250 lines
-- Python:  480 lines
-- Docs:    2000+ lines
+- C: 250 lines
+- Python: 480 lines
+- Docs: 2000+ lines
 
 File Size:
-- Source:  ~30 KB
-- Binary:  34 KB (libprofiler.dylib)
-- Docs:    ~25 KB
+- Source: ~30 KB
+- Binary: 34 KB (libprofiler.dylib)
+- Docs: ~25 KB
 ```
 
-## ️ Architecture
+## Architecture
 
 ```
 User Code (Python)
-    ↓
+ ↓
 Decorators / Context Managers / CLI
-    ↓
+ ↓
 profiler_cli.py (Python API Layer)
-    ↓
+ ↓
 profiler_binding.py (ctypes wrapper)
-    ↓
+ ↓
 libprofiler.dylib (C sampling engine)
-    ↓
+ ↓
 System APIs (backtrace, mach, dladdr)
 ```
 
-##  Generated Output Files
+## Generated Output Files
 
 When you run the profiler, it creates:
 
 ```
 profiler_output/
-├── profile_TIMESTAMP_NAME.json          (complete data)
-├── profile_TIMESTAMP_NAME.txt           (summary)
+├── profile_TIMESTAMP_NAME.json (complete data)
+├── profile_TIMESTAMP_NAME.txt (summary)
 └── profile_TIMESTAMP_NAME_flamegraph.txt (visualization input)
 ```
 
-##  Finding Your Way Around
+## Finding Your Way Around
 
 **Want to...**
 
@@ -1116,7 +1116,7 @@ profiler_output/
 - **Learn all features?** → Read [README.md](README.md)
 - **Check build status?** → Read [BUILD_SUMMARY.md](BUILD_SUMMARY.md)
 
-##  Next Steps
+## Next Steps
 
 1. **Build:** `make` (already done)
 2. **Test:** `python3 test_profiler.py`
@@ -1124,14 +1124,14 @@ profiler_output/
 4. **Profile your code:** Add `@profile_function()` decorator
 5. **Analyze results:** Look at `profiler_output/`
 
-##  Learning Progression
+## Learning Progression
 
 1. **Beginner:** Read QUICKSTART.md, run examples 1-2
 2. **Intermediate:** Try pattern 3 (CLI), analyze output, read README.md
 3. **Advanced:** Read ARCHITECTURE.md, study profiler.c, extend with custom metrics
 4. **Expert:** Modify C code, increase sample rate, add custom metrics
 
-##  Verification Checklist
+## Verification Checklist
 
 - [x] Source files compiled successfully
 - [x] Binary built (libprofiler.dylib, 34 KB)
@@ -1140,28 +1140,28 @@ profiler_output/
 - [x] Documentation complete
 - [x] Ready for production use
 
-##  File Summary
+## File Summary
 
 ```
 profiler/
-├──  INDEX.md (this file)
-├──  README.md (features, usage, output)
-├──  QUICKSTART.md (5-minute start)
-├── ️ ARCHITECTURE.md (technical details)
-├──  BUILD_SUMMARY.md (build info, tests)
-├──  profiler.c (C sampling engine)
-├──  profiler_binding.py (Python wrapper)
-├──  profiler_cli.py (CLI & reporting)
-├──  libprofiler.dylib (compiled library)
-├──  test_profiler.py (test suite)
-├──  example_usage.py (4 patterns)
-├── ️ Makefile (build config)
-└──  build.sh (build script)
+├── INDEX.md (this file)
+├── README.md (features, usage, output)
+├── QUICKSTART.md (5-minute start)
+├── ARCHITECTURE.md (technical details)
+├── BUILD_SUMMARY.md (build info, tests)
+├── profiler.c (C sampling engine)
+├── profiler_binding.py (Python wrapper)
+├── profiler_cli.py (CLI & reporting)
+├── libprofiler.dylib (compiled library)
+├── test_profiler.py (test suite)
+├── example_usage.py (4 patterns)
+├── Makefile (build config)
+└── build.sh (build script)
 ```
 
 ---
 
-##  Quick Links
+## Quick Links
 
 | What | Where |
 |------|-------|
@@ -1175,8 +1175,8 @@ profiler/
 
 ---
 
-**Status:**  Complete and Production-Ready  
-**Location:** ~/Documents/Code/profiler/  
+**Status:** Complete and Production-Ready 
+**Location:** ~/Documents/Code/profiler/ 
 **Built:** February 10, 2026
 
 Start profiling: `cd ~/Documents/Code/profiler && python3 example_usage.py 3`
@@ -1188,7 +1188,7 @@ Get profiling in 5 minutes!
 
 ```bash
 cd ~/Documents/Code/profiler
-make              # Build the C extension
+make # Build the C extension
 ```
 
 That's it! You're ready to profile.
@@ -1200,10 +1200,10 @@ from profiler_cli import profile_function
 
 @profile_function()
 def my_slow_function():
-    total = 0
-    for i in range(1000000):
-        total += i * i
-    return total
+ total = 0
+ for i in range(1000000):
+ total += i * i
+ return total
 
 result = my_slow_function()
 ```
@@ -1221,14 +1221,14 @@ Output shows CPU hotspots, memory usage, and instructions automatically.
 from profiler_cli import profiler_context
 
 def main():
-    with profiler_context("data_processing"):
-        data = load_data()
-        process(data)
-    
-    with profiler_context("sorting"):
-        results = sorted(data)
-    
-    return results
+ with profiler_context("data_processing"):
+ data = load_data()
+ process(data)
+ 
+ with profiler_context("sorting"):
+ results = sorted(data)
+ 
+ return results
 
 main()
 ```
@@ -1273,32 +1273,32 @@ open graph.svg
 PROFILER SUMMARY
 ============================================================
 
-Elapsed Time:      2.34s
-Total Samples:     2340
-Unique Stacks:     145
+Elapsed Time: 2.34s
+Total Samples: 2340
+Unique Stacks: 145
 
 ============================================================
 HOT PATHS (Top 15)
 ============================================================
 
- 1. [42.3%]    990 samples | 50000 instr |    128.5KB
-    ↓ process_item
-    ↓ map_function
-    ↓ main
+ 1. [42.3%] 990 samples | 50000 instr | 128.5KB
+ ↓ process_item
+ ↓ map_function
+ ↓ main
 
- 2. [15.2%]    355 samples | 18000 instr |     45.2KB
-    ↓ malloc
-    ↓ allocate_buffer
-    ↓ main
-    
+ 2. [15.2%] 355 samples | 18000 instr | 45.2KB
+ ↓ malloc
+ ↓ allocate_buffer
+ ↓ main
+ 
 [... more paths ...]
 ```
 
 ### What to look for:
 
-**High-percentage paths** = CPU bottlenecks  
-**High instruction count** = Heavy computation  
-**High memory** = Allocation hotspots  
+**High-percentage paths** = CPU bottlenecks 
+**High instruction count** = Heavy computation 
+**High memory** = Allocation hotspots 
 
 ## Common Patterns
 
@@ -1326,7 +1326,7 @@ python3 profiler_cli.py analyze after.json | head -10
 ```python
 @profile_function(output_dir="./results/experiment1")
 def my_function():
-    pass
+ pass
 ```
 
 ### Multiple profiles
@@ -1334,11 +1334,11 @@ def my_function():
 from profiler_binding import CPUProfiler
 
 for trial in range(3):
-    profiler = CPUProfiler()
-    profiler.start()
-    # ... code ...
-    profiler.stop()
-    profiler.save_json(f"trial_{trial}.json")
+ profiler = CPUProfiler()
+ profiler.start()
+ # ... code ...
+ profiler.stop()
+ profiler.save_json(f"trial_{trial}.json")
 ```
 
 ## Troubleshooting
@@ -1357,9 +1357,9 @@ make clean && make
 - Functions show as "??" instead of names
 - Ensure debug symbols are available
 - Use `nm` to check:
-  ```bash
-  nm libprofiler.dylib | grep -i function_name
-  ```
+ ```bash
+ nm libprofiler.dylib | grep -i function_name
+ ```
 
 ## Next Steps
 
@@ -1383,87 +1383,87 @@ make clean && make
 
 ```svg
 <svg viewBox="0 0 680 420" width="680" height="420" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;background:#f8fafc;border-radius:12px">
-  <!-- Title -->
-  <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">profiler — CPU Profiler for Python + C</text>
+ <!-- Title -->
+ <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">profiler — CPU Profiler for Python + C</text>
 
-  <!-- Root node -->
-  <rect x="270" y="44" width="140" height="34" rx="8" fill="#0071e3"/>
-  <text x="340" y="66" text-anchor="middle" font-size="11" fill="white" font-weight="bold">profiler/</text>
+ <!-- Root node -->
+ <rect x="270" y="44" width="140" height="34" rx="8" fill="#0071e3"/>
+ <text x="340" y="66" text-anchor="middle" font-size="11" fill="white" font-weight="bold">profiler/</text>
 
-  <!-- Dashed lines from root -->
-  <line x1="290" y1="78" x2="90" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <line x1="315" y1="78" x2="220" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <line x1="340" y1="78" x2="340" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <line x1="365" y1="78" x2="460" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <line x1="390" y1="78" x2="580" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+ <!-- Dashed lines from root -->
+ <line x1="290" y1="78" x2="90" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+ <line x1="315" y1="78" x2="220" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+ <line x1="340" y1="78" x2="340" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+ <line x1="365" y1="78" x2="460" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+ <line x1="390" y1="78" x2="580" y2="120" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
 
-  <!-- C core -->
-  <rect x="34" y="120" width="112" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="90" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler.c</text>
-  <text x="90" y="146" text-anchor="middle" font-size="9" fill="#64748b">C core engine</text>
+ <!-- C core -->
+ <rect x="34" y="120" width="112" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
+ <text x="90" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler.c</text>
+ <text x="90" y="146" text-anchor="middle" font-size="9" fill="#64748b">C core engine</text>
 
-  <!-- Python binding -->
-  <rect x="158" y="120" width="128" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="222" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler_binding.py</text>
-  <text x="222" y="146" text-anchor="middle" font-size="9" fill="#64748b">ctypes bridge</text>
+ <!-- Python binding -->
+ <rect x="158" y="120" width="128" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
+ <text x="222" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler_binding.py</text>
+ <text x="222" y="146" text-anchor="middle" font-size="9" fill="#64748b">ctypes bridge</text>
 
-  <!-- CLI -->
-  <rect x="298" y="120" width="84" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="340" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler_cli.py</text>
-  <text x="340" y="146" text-anchor="middle" font-size="9" fill="#64748b">CLI entry</text>
+ <!-- CLI -->
+ <rect x="298" y="120" width="84" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
+ <text x="340" y="134" text-anchor="middle" font-size="10" fill="#3730a3">profiler_cli.py</text>
+ <text x="340" y="146" text-anchor="middle" font-size="9" fill="#64748b">CLI entry</text>
 
-  <!-- example_usage.py -->
-  <rect x="394" y="120" width="128" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="458" y="134" text-anchor="middle" font-size="10" fill="#3730a3">example_usage.py</text>
-  <text x="458" y="146" text-anchor="middle" font-size="9" fill="#64748b">demo scripts</text>
+ <!-- example_usage.py -->
+ <rect x="394" y="120" width="128" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
+ <text x="458" y="134" text-anchor="middle" font-size="10" fill="#3730a3">example_usage.py</text>
+ <text x="458" y="146" text-anchor="middle" font-size="9" fill="#64748b">demo scripts</text>
 
-  <!-- test_profiler.py -->
-  <rect x="534" y="120" width="112" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="590" y="134" text-anchor="middle" font-size="10" fill="#3730a3">test_profiler.py</text>
-  <text x="590" y="146" text-anchor="middle" font-size="9" fill="#64748b">test suite</text>
+ <!-- test_profiler.py -->
+ <rect x="534" y="120" width="112" height="30" rx="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.5"/>
+ <text x="590" y="134" text-anchor="middle" font-size="10" fill="#3730a3">test_profiler.py</text>
+ <text x="590" y="146" text-anchor="middle" font-size="9" fill="#64748b">test suite</text>
 
-  <!-- Build artifacts -->
-  <line x1="90" y1="150" x2="90" y2="220" stroke="#94a3b8" stroke-width="1"/>
-  <line x1="340" y1="78" x2="90" y2="220" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+ <!-- Build artifacts -->
+ <line x1="90" y1="150" x2="90" y2="220" stroke="#94a3b8" stroke-width="1"/>
+ <line x1="340" y1="78" x2="90" y2="220" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
 
-  <rect x="34" y="220" width="112" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
-  <text x="90" y="234" text-anchor="middle" font-size="10" fill="#0c4a6e">profiler.o</text>
-  <text x="90" y="246" text-anchor="middle" font-size="9" fill="#64748b">compiled object</text>
+ <rect x="34" y="220" width="112" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+ <text x="90" y="234" text-anchor="middle" font-size="10" fill="#0c4a6e">profiler.o</text>
+ <text x="90" y="246" text-anchor="middle" font-size="9" fill="#64748b">compiled object</text>
 
-  <line x1="90" y1="150" x2="210" y2="220" stroke="#94a3b8" stroke-width="1"/>
-  <rect x="158" y="220" width="112" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
-  <text x="214" y="234" text-anchor="middle" font-size="10" fill="#0c4a6e">libprofiler.dylib</text>
-  <text x="214" y="246" text-anchor="middle" font-size="9" fill="#64748b">shared library</text>
+ <line x1="90" y1="150" x2="210" y2="220" stroke="#94a3b8" stroke-width="1"/>
+ <rect x="158" y="220" width="112" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+ <text x="214" y="234" text-anchor="middle" font-size="10" fill="#0c4a6e">libprofiler.dylib</text>
+ <text x="214" y="246" text-anchor="middle" font-size="9" fill="#64748b">shared library</text>
 
-  <!-- Build config -->
-  <line x1="340" y1="78" x2="340" y2="220" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
-  <rect x="298" y="220" width="84" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
-  <text x="340" y="237" text-anchor="middle" font-size="10" fill="#0c4a6e">Makefile</text>
+ <!-- Build config -->
+ <line x1="340" y1="78" x2="340" y2="220" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+ <rect x="298" y="220" width="84" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+ <text x="340" y="237" text-anchor="middle" font-size="10" fill="#0c4a6e">Makefile</text>
 
-  <rect x="396" y="220" width="80" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
-  <text x="436" y="237" text-anchor="middle" font-size="10" fill="#0c4a6e">build.sh</text>
+ <rect x="396" y="220" width="80" height="30" rx="6" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+ <text x="436" y="237" text-anchor="middle" font-size="10" fill="#0c4a6e">build.sh</text>
 
-  <!-- Docs -->
-  <line x1="590" y1="150" x2="590" y2="220" stroke="#94a3b8" stroke-width="1"/>
-  <rect x="534" y="220" width="112" height="30" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
-  <text x="590" y="234" text-anchor="middle" font-size="10" fill="#166534">ARCHITECTURE.md</text>
-  <text x="590" y="246" text-anchor="middle" font-size="9" fill="#64748b">design docs</text>
+ <!-- Docs -->
+ <line x1="590" y1="150" x2="590" y2="220" stroke="#94a3b8" stroke-width="1"/>
+ <rect x="534" y="220" width="112" height="30" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+ <text x="590" y="234" text-anchor="middle" font-size="10" fill="#166534">ARCHITECTURE.md</text>
+ <text x="590" y="246" text-anchor="middle" font-size="9" fill="#64748b">design docs</text>
 
-  <!-- profiler_output folder -->
-  <line x1="340" y1="78" x2="340" y2="310" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
-  <rect x="278" y="310" width="124" height="30" rx="6" fill="#6366f1"/>
-  <text x="340" y="328" text-anchor="middle" font-size="11" fill="white">profiler_output/</text>
+ <!-- profiler_output folder -->
+ <line x1="340" y1="78" x2="340" y2="310" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+ <rect x="278" y="310" width="124" height="30" rx="6" fill="#6366f1"/>
+ <text x="340" y="328" text-anchor="middle" font-size="11" fill="white">profiler_output/</text>
 
-  <!-- Legend -->
-  <rect x="30" y="375" width="12" height="12" rx="2" fill="#0071e3"/>
-  <text x="48" y="386" font-size="9" fill="#64748b">Root</text>
-  <rect x="90" y="375" width="12" height="12" rx="2" fill="#6366f1"/>
-  <text x="108" y="386" font-size="9" fill="#64748b">Folder</text>
-  <rect x="158" y="375" width="12" height="12" rx="2" fill="#e0e7ff" stroke="#818cf8" stroke-width="1"/>
-  <text x="176" y="386" font-size="9" fill="#64748b">Source</text>
-  <rect x="236" y="375" width="12" height="12" rx="2" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1"/>
-  <text x="254" y="386" font-size="9" fill="#64748b">Config/Artifact</text>
-  <rect x="346" y="375" width="12" height="12" rx="2" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
-  <text x="364" y="386" font-size="9" fill="#64748b">Docs</text>
+ <!-- Legend -->
+ <rect x="30" y="375" width="12" height="12" rx="2" fill="#0071e3"/>
+ <text x="48" y="386" font-size="9" fill="#64748b">Root</text>
+ <rect x="90" y="375" width="12" height="12" rx="2" fill="#6366f1"/>
+ <text x="108" y="386" font-size="9" fill="#64748b">Folder</text>
+ <rect x="158" y="375" width="12" height="12" rx="2" fill="#e0e7ff" stroke="#818cf8" stroke-width="1"/>
+ <text x="176" y="386" font-size="9" fill="#64748b">Source</text>
+ <rect x="236" y="375" width="12" height="12" rx="2" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1"/>
+ <text x="254" y="386" font-size="9" fill="#64748b">Config/Artifact</text>
+ <rect x="346" y="375" width="12" height="12" rx="2" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+ <text x="364" y="386" font-size="9" fill="#64748b">Docs</text>
 </svg>
 ```

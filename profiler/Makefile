@@ -11,17 +11,17 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $^
-	@echo "✓ Built $(TARGET)"
+	@echo "[x] Built $(TARGET)"
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
-	@echo "✓ Cleaned"
+	@echo "[x] Cleaned"
 
 test: $(TARGET)
 	python3 profiler_binding.py profile ./output
-	@echo "✓ Test completed"
+	@echo "[x] Test completed"
 
 .DEFAULT_GOAL := all

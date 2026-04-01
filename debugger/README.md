@@ -104,26 +104,26 @@ nm myprog | grep main
 
 ## What You Can Do
 
-✓ Set breakpoints at any address
-✓ Single-step through code
-✓ Read CPU registers (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
-✓ Read/write memory
-✓ Inspect program state
+[x] Set breakpoints at any address
+[x] Single-step through code
+[x] Read CPU registers (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
+[x] Read/write memory
+[x] Inspect program state
 
 ## What You Can't (Yet)
 
-✗ Symbol resolution (use `nm` command)
-✗ Disassembly
-✗ Backtrace
-✗ Watch expressions
-✗ Multi-threading
+[ ] Symbol resolution (use `nm` command)
+[ ] Disassembly
+[ ] Backtrace
+[ ] Watch expressions
+[ ] Multi-threading
 
 But the foundation is there to add these.
 
 ## Platform Support
 
-- ✓ macOS (tested, works)
-- ✓ Linux x86-64 (code ready)
+- [x] macOS (tested, works)
+- [x] Linux x86-64 (code ready)
 
 ## Code
 
@@ -134,35 +134,35 @@ But the foundation is there to add these.
 
 ## Status
 
-✓ Builds cleanly (0 errors)
-✓ Runs on macOS & Linux
-✓ All core features working
-✓ Ready to extend
+[x] Builds cleanly (0 errors)
+[x] Runs on macOS & Linux
+[x] All core features working
+[x] Ready to extend
 
-Ship it! 🚀
-# 🚀 Minimal Debugger - DONE
+Ship it! 
+# Minimal Debugger - DONE
 
 ## Summary
 
-✅ **COMPLETE IN ~1 HOUR** - Stripped-down, working C debugger with essential features only.
+[x] **COMPLETE IN ~1 HOUR** - Stripped-down, working C debugger with essential features only.
 
 ## What You Get
 
 **Executable:** `debugger` (46 KB)
 **Code:** Just 380 lines total
 - `debugger.h` - 45 lines
-- `debugger.cpp` - 320 lines  
+- `debugger.cpp` - 320 lines 
 - `main.cpp` - 15 lines
 
 ## It Works
 
 ```bash
 $ cd ~/Documents/Code/debugger
-$ make                      # Builds in 1 second
-$ ./debugger ./test_prog    # Runs immediately
-(dbg) run                   # Program starts
-(dbg) help                  # Shows commands
-(dbg) quit                  # Exit
+$ make # Builds in 1 second
+$ ./debugger ./test_prog # Runs immediately
+(dbg) run # Program starts
+(dbg) help # Shows commands
+(dbg) quit # Exit
 ```
 
 ## Commands (All Working)
@@ -180,22 +180,22 @@ $ ./debugger ./test_prog    # Runs immediately
 
 ## Core Features
 
-✅ ptrace-based process control
-✅ INT3 software breakpoints
-✅ Single-step execution
-✅ Register inspection (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
-✅ Memory reading/writing
-✅ Interactive REPL
-✅ Builds on macOS & Linux
+[x] ptrace-based process control
+[x] INT3 software breakpoints
+[x] Single-step execution
+[x] Register inspection (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
+[x] Memory reading/writing
+[x] Interactive REPL
+[x] Builds on macOS & Linux
 
 ## What's Minimal
 
-❌ No built-in symbol resolution (use `nm` command)
-❌ No backtrace
-❌ No disassembly
-❌ No fancy UI
-❌ No multi-threading support
-❌ No C++ support
+[ ] No built-in symbol resolution (use `nm` command)
+[ ] No backtrace
+[ ] No disassembly
+[ ] No fancy UI
+[ ] No multi-threading support
+[ ] No C++ support
 
 **But it WORKS for the essentials.**
 
@@ -205,12 +205,12 @@ $ ./debugger ./test_prog    # Runs immediately
 # Your program
 $ cat my_program.c
 int add(int a, int b) {
-    return a + b;
+ return a + b;
 }
 int main() {
-    int x = add(5, 3);
-    printf("Result: %d\n", x);
-    return 0;
+ int x = add(5, 3);
+ printf("Result: %d\n", x);
+ return 0;
 }
 
 # Compile it
@@ -233,27 +233,27 @@ $ ./debugger ./my_program
 ## Build Status
 
 ```
-✓ Compiles with no errors
-✓ 380 lines of clean code
-✓ Runs on macOS (tested)
-✓ Ready for Linux
-✓ All features working
+[x] Compiles with no errors
+[x] 380 lines of clean code
+[x] Runs on macOS (tested)
+[x] Ready for Linux
+[x] All features working
 ```
 
 ## Directory
 
 ```
 ~/Documents/Code/debugger/
-├── debugger           ✓ Main executable
-├── test_prog          ✓ Test binary
-├── debugger.h/cpp     ✓ Implementation
-├── main.cpp           ✓ Entry point
-├── test.c             ✓ Test source
-├── Makefile           ✓ Build
-├── README.md          ✓ Usage
-├── QUICKSTART.md      ✓ Quick ref
-├── DONE.txt           ✓ Status
-└── FINAL.md           ✓ This file
+├── debugger [x] Main executable
+├── test_prog [x] Test binary
+├── debugger.h/cpp [x] Implementation
+├── main.cpp [x] Entry point
+├── test.c [x] Test source
+├── Makefile [x] Build
+├── README.md [x] Usage
+├── QUICKSTART.md [x] Quick ref
+├── DONE.txt [x] Status
+└── FINAL.md [x] This file
 ```
 
 ## Next Steps
@@ -275,14 +275,14 @@ $ ./debugger ./my_program
 
 ---
 
-**Status: ✓ SHIPPED**
+**Status: [x] SHIPPED**
 
 Ready to debug C programs. Simple, functional, extensible.
 
 Total time: ~1 hour | 380 lines | Works great.
 # Minimal C Debugger - Quick Index
 
-## 🚀 START HERE
+## START HERE
 
 **Location:** `~/Documents/Code/debugger/`
 
@@ -293,7 +293,7 @@ make clean && make
 ./debugger ./test_prog
 ```
 
-## 📚 Documentation Map
+## Documentation Map
 
 | Document | Purpose | Read When |
 |----------|---------|-----------|
@@ -302,7 +302,7 @@ make clean && make
 | **FINAL.md** | What's included | Checking what you got |
 | **SHIPPING.md** | Quality checklist | Verifying it's ready |
 
-## 🎯 What You Got
+## What You Got
 
 **Executables:**
 - `debugger` (46 KB) - The debugger
@@ -319,29 +319,29 @@ make clean && make
 **Build:**
 - `Makefile` - One command build
 
-## ⚡ Basic Commands
+## Basic Commands
 
 ```
-(dbg) run              - Start program
-(dbg) break 0x1234     - Set breakpoint
-(dbg) continue         - Run
-(dbg) step             - Single step
-(dbg) print $rax       - Show register
-(dbg) help             - Show all commands
-(dbg) quit             - Exit
+(dbg) run - Start program
+(dbg) break 0x1234 - Set breakpoint
+(dbg) continue - Run
+(dbg) step - Single step
+(dbg) print $rax - Show register
+(dbg) help - Show all commands
+(dbg) quit - Exit
 ```
 
-## ✅ Quality Checklist
+## [x] Quality Checklist
 
-- ✓ Compiles: 0 errors
-- ✓ Binaries: Built and working
-- ✓ Test program: Runs successfully
-- ✓ Core features: All implemented
-- ✓ Platform support: macOS & Linux
-- ✓ Documentation: Complete
-- ✓ Code quality: Production-ready
+- [x] Compiles: 0 errors
+- [x] Binaries: Built and working
+- [x] Test program: Runs successfully
+- [x] Core features: All implemented
+- [x] Platform support: macOS & Linux
+- [x] Documentation: Complete
+- [x] Code quality: Production-ready
 
-## 🔧 How to Use
+## How to Use
 
 ### Debug test program:
 ```bash
@@ -368,30 +368,30 @@ nm myprog | grep main
 (dbg) continue
 ```
 
-## 🏗️ Code Structure
+## Code Structure
 
 ```
 Debugger (main class)
-├── cmd_run()          - Fork and exec target
-├── cmd_break()        - Set INT3 breakpoint
-├── cmd_continue()     - Resume execution
-├── cmd_step()         - Single-step
-├── cmd_print()        - Inspect registers/memory
-├── read_byte()        - ptrace PEEKDATA
-├── write_byte()       - ptrace POKEDATA
-└── parse_addr()       - Parse hex addresses
+├── cmd_run() - Fork and exec target
+├── cmd_break() - Set INT3 breakpoint
+├── cmd_continue() - Resume execution
+├── cmd_step() - Single-step
+├── cmd_print() - Inspect registers/memory
+├── read_byte() - ptrace PEEKDATA
+├── write_byte() - ptrace POKEDATA
+└── parse_addr() - Parse hex addresses
 ```
 
-## 📋 Features
+## Features
 
 **Working:**
-- ✓ Process spawning (fork/execl)
-- ✓ ptrace attach
-- ✓ INT3 breakpoints
-- ✓ Single-step execution
-- ✓ CPU register access
-- ✓ Memory read/write
-- ✓ Interactive REPL
+- [x] Process spawning (fork/execl)
+- [x] ptrace attach
+- [x] INT3 breakpoints
+- [x] Single-step execution
+- [x] CPU register access
+- [x] Memory read/write
+- [x] Interactive REPL
 
 **Not in scope (yet):**
 - Symbol resolution
@@ -400,16 +400,16 @@ Debugger (main class)
 - Multi-threading
 - Watch expressions
 
-## 🎓 Key Files to Read
+## Key Files to Read
 
 1. **README.md** - Usage and features
 2. **debugger.h** - Public interface (simple!)
 3. **debugger.cpp** - Implementation with comments
 4. **main.cpp** - Entry point (just 15 lines)
 
-## 🚢 Shipping Status
+## Shipping Status
 
-**Status:** ✓ READY
+**Status:** [x] READY
 
 - Built and tested
 - All features working
@@ -425,7 +425,7 @@ Debugger (main class)
 
 **Next step:** `make && ./debugger ./test_prog`
 
-Enjoy! 🐛
+Enjoy! 
 # Minimal Debugger - Quick Start
 
 ## Build & Run (30 seconds)
@@ -439,13 +439,13 @@ make clean && make
 ## Inside the Debugger
 
 ```
-(dbg) run              # Start program
-(dbg) help             # Show commands
-(dbg) break 0x100003d40  # Set breakpoint at address
-(dbg) continue         # Run to breakpoint
-(dbg) print $rax       # Show register value
-(dbg) step             # Execute one instruction
-(dbg) quit             # Exit
+(dbg) run # Start program
+(dbg) help # Show commands
+(dbg) break 0x100003d40 # Set breakpoint at address
+(dbg) continue # Run to breakpoint
+(dbg) print $rax # Show register value
+(dbg) step # Execute one instruction
+(dbg) quit # Exit
 ```
 
 ## How to Use with Your Code
@@ -462,21 +462,21 @@ nm myprog | grep main
 
 # 4. Inside debugger
 (dbg) run
-(dbg) break 0x100003d40     # Replace with your address
+(dbg) break 0x100003d40 # Replace with your address
 (dbg) continue
-(dbg) print $rax             # Check registers
+(dbg) print $rax # Check registers
 (dbg) step
 (dbg) quit
 ```
 
 ## What It Does
 
-✓ Fork & ptrace target process
-✓ Set breakpoints (INT3)
-✓ Single-step code
-✓ Read/write registers
-✓ Inspect memory
-✓ Basic REPL interface
+[x] Fork & ptrace target process
+[x] Set breakpoints (INT3)
+[x] Single-step code
+[x] Read/write registers
+[x] Inspect memory
+[x] Basic REPL interface
 
 ## What It Doesn't Do (Yet)
 
@@ -495,11 +495,11 @@ nm myprog | grep main
 
 ## Status
 
-✓ Builds cleanly
-✓ Runs test program
-✓ Implements core features
-✓ Ready to use and extend
-# ✅ SHIPPING CHECKLIST
+[x] Builds cleanly
+[x] Runs test program
+[x] Implements core features
+[x] Ready to use and extend
+# [x] SHIPPING CHECKLIST
 
 ## Build Quality
 - [x] Compiles with 0 errors
@@ -545,7 +545,7 @@ nm myprog | grep main
 - [x] Error handling present
 - [x] Platform abstractions (#ifdef)
 
-## Status: READY TO SHIP ✓
+## Status: READY TO SHIP [x]
 
 All requirements met. Functional debugger in minimal code.
 
@@ -560,81 +560,81 @@ SHIPPED: Feb 12, 2025
 
 ```svg
 <svg viewBox="0 0 680 420" width="680" height="420" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;background:#f8fafc;border-radius:12px">
-  <rect width="680" height="420" fill="#f8fafc" rx="12"/>
-  <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">debugger — 380-line ptrace-based C debugger</text>
+ <rect width="680" height="420" fill="#f8fafc" rx="12"/>
+ <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">debugger — 380-line ptrace-based C debugger</text>
 
-  <!-- Root node -->
-  <rect x="290" y="45" width="100" height="34" rx="8" fill="#0071e3"/>
-  <text x="340" y="67" text-anchor="middle" font-size="11" fill="white">debugger/</text>
+ <!-- Root node -->
+ <rect x="290" y="45" width="100" height="34" rx="8" fill="#0071e3"/>
+ <text x="340" y="67" text-anchor="middle" font-size="11" fill="white">debugger/</text>
 
-  <!-- Dashed lines from root -->
-  <line x1="340" y1="79" x2="120" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <line x1="340" y1="79" x2="240" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <line x1="340" y1="79" x2="340" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <line x1="340" y1="79" x2="460" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <line x1="340" y1="79" x2="570" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <!-- Dashed lines from root -->
+ <line x1="340" y1="79" x2="120" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <line x1="340" y1="79" x2="240" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <line x1="340" y1="79" x2="340" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <line x1="340" y1="79" x2="460" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <line x1="340" y1="79" x2="570" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
 
-  <!-- Source files -->
-  <rect x="70" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
-  <text x="120" y="157" text-anchor="middle" font-size="11" fill="#3730a3">debugger.h</text>
-  <text x="120" y="168" text-anchor="middle" font-size="9" fill="#64748b">45 lines · interface</text>
+ <!-- Source files -->
+ <rect x="70" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
+ <text x="120" y="157" text-anchor="middle" font-size="11" fill="#3730a3">debugger.h</text>
+ <text x="120" y="168" text-anchor="middle" font-size="9" fill="#64748b">45 lines · interface</text>
 
-  <rect x="190" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
-  <text x="240" y="157" text-anchor="middle" font-size="11" fill="#3730a3">debugger.cpp</text>
-  <text x="240" y="168" text-anchor="middle" font-size="9" fill="#64748b">320 lines · impl</text>
+ <rect x="190" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
+ <text x="240" y="157" text-anchor="middle" font-size="11" fill="#3730a3">debugger.cpp</text>
+ <text x="240" y="168" text-anchor="middle" font-size="9" fill="#64748b">320 lines · impl</text>
 
-  <rect x="290" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
-  <text x="340" y="157" text-anchor="middle" font-size="11" fill="#3730a3">main.cpp</text>
-  <text x="340" y="168" text-anchor="middle" font-size="9" fill="#64748b">15 lines · entry</text>
+ <rect x="290" y="140" width="100" height="34" rx="6" fill="#e0e7ff"/>
+ <text x="340" y="157" text-anchor="middle" font-size="11" fill="#3730a3">main.cpp</text>
+ <text x="340" y="168" text-anchor="middle" font-size="9" fill="#64748b">15 lines · entry</text>
 
-  <rect x="410" y="140" width="100" height="34" rx="6" fill="#fef3c7"/>
-  <text x="460" y="157" text-anchor="middle" font-size="11" fill="#92400e">test.c</text>
-  <text x="460" y="168" text-anchor="middle" font-size="9" fill="#64748b">test source</text>
+ <rect x="410" y="140" width="100" height="34" rx="6" fill="#fef3c7"/>
+ <text x="460" y="157" text-anchor="middle" font-size="11" fill="#92400e">test.c</text>
+ <text x="460" y="168" text-anchor="middle" font-size="9" fill="#64748b">test source</text>
 
-  <rect x="520" y="140" width="100" height="34" rx="6" fill="#e0f2fe"/>
-  <text x="570" y="157" text-anchor="middle" font-size="11" fill="#0369a1">Makefile</text>
-  <text x="570" y="168" text-anchor="middle" font-size="9" fill="#64748b">build system</text>
+ <rect x="520" y="140" width="100" height="34" rx="6" fill="#e0f2fe"/>
+ <text x="570" y="157" text-anchor="middle" font-size="11" fill="#0369a1">Makefile</text>
+ <text x="570" y="168" text-anchor="middle" font-size="9" fill="#64748b">build system</text>
 
-  <!-- debugger.cpp internals -->
-  <line x1="240" y1="174" x2="100" y2="250" stroke="#94a3b8" stroke-width="1"/>
-  <line x1="240" y1="174" x2="200" y2="250" stroke="#94a3b8" stroke-width="1"/>
-  <line x1="240" y1="174" x2="300" y2="250" stroke="#94a3b8" stroke-width="1"/>
-  <line x1="240" y1="174" x2="400" y2="250" stroke="#94a3b8" stroke-width="1"/>
-  <line x1="240" y1="174" x2="500" y2="250" stroke="#94a3b8" stroke-width="1"/>
+ <!-- debugger.cpp internals -->
+ <line x1="240" y1="174" x2="100" y2="250" stroke="#94a3b8" stroke-width="1"/>
+ <line x1="240" y1="174" x2="200" y2="250" stroke="#94a3b8" stroke-width="1"/>
+ <line x1="240" y1="174" x2="300" y2="250" stroke="#94a3b8" stroke-width="1"/>
+ <line x1="240" y1="174" x2="400" y2="250" stroke="#94a3b8" stroke-width="1"/>
+ <line x1="240" y1="174" x2="500" y2="250" stroke="#94a3b8" stroke-width="1"/>
 
-  <rect x="50" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
-  <text x="100" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_run()</text>
-  <text x="100" y="278" text-anchor="middle" font-size="9" fill="#64748b">fork + execl</text>
+ <rect x="50" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
+ <text x="100" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_run()</text>
+ <text x="100" y="278" text-anchor="middle" font-size="9" fill="#64748b">fork + execl</text>
 
-  <rect x="150" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
-  <text x="200" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_break()</text>
-  <text x="200" y="278" text-anchor="middle" font-size="9" fill="#64748b">INT3 breakpoints</text>
+ <rect x="150" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
+ <text x="200" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_break()</text>
+ <text x="200" y="278" text-anchor="middle" font-size="9" fill="#64748b">INT3 breakpoints</text>
 
-  <rect x="250" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
-  <text x="300" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_step()</text>
-  <text x="300" y="278" text-anchor="middle" font-size="9" fill="#64748b">single-step exec</text>
+ <rect x="250" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
+ <text x="300" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_step()</text>
+ <text x="300" y="278" text-anchor="middle" font-size="9" fill="#64748b">single-step exec</text>
 
-  <rect x="350" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
-  <text x="400" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_print()</text>
-  <text x="400" y="278" text-anchor="middle" font-size="9" fill="#64748b">regs + memory</text>
+ <rect x="350" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
+ <text x="400" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_print()</text>
+ <text x="400" y="278" text-anchor="middle" font-size="9" fill="#64748b">regs + memory</text>
 
-  <rect x="450" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
-  <text x="500" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_continue()</text>
-  <text x="500" y="278" text-anchor="middle" font-size="9" fill="#64748b">resume to bp</text>
+ <rect x="450" y="250" width="100" height="34" rx="6" fill="#dcfce7"/>
+ <text x="500" y="267" text-anchor="middle" font-size="10" fill="#166534">cmd_continue()</text>
+ <text x="500" y="278" text-anchor="middle" font-size="9" fill="#64748b">resume to bp</text>
 
-  <!-- Binaries row -->
-  <line x1="340" y1="79" x2="200" y2="340" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <line x1="340" y1="79" x2="450" y2="340" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <!-- Binaries row -->
+ <line x1="340" y1="79" x2="200" y2="340" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+ <line x1="340" y1="79" x2="450" y2="340" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
 
-  <rect x="150" y="340" width="100" height="32" rx="6" fill="#e0f2fe"/>
-  <text x="200" y="357" text-anchor="middle" font-size="11" fill="#0369a1">debugger</text>
-  <text x="200" y="368" text-anchor="middle" font-size="9" fill="#64748b">binary · 46KB</text>
+ <rect x="150" y="340" width="100" height="32" rx="6" fill="#e0f2fe"/>
+ <text x="200" y="357" text-anchor="middle" font-size="11" fill="#0369a1">debugger</text>
+ <text x="200" y="368" text-anchor="middle" font-size="9" fill="#64748b">binary · 46KB</text>
 
-  <rect x="400" y="340" width="100" height="32" rx="6" fill="#e0f2fe"/>
-  <text x="450" y="357" text-anchor="middle" font-size="11" fill="#0369a1">test_prog</text>
-  <text x="450" y="368" text-anchor="middle" font-size="9" fill="#64748b">test binary · 33KB</text>
+ <rect x="400" y="340" width="100" height="32" rx="6" fill="#e0f2fe"/>
+ <text x="450" y="357" text-anchor="middle" font-size="11" fill="#0369a1">test_prog</text>
+ <text x="450" y="368" text-anchor="middle" font-size="9" fill="#64748b">test binary · 33KB</text>
 
-  <!-- Tech labels -->
-  <text x="340" y="408" text-anchor="middle" font-size="9" fill="#64748b">C++ · ptrace · SIGTRAP · PTRACE_GETREGS · macOS + Linux x86-64</text>
+ <!-- Tech labels -->
+ <text x="340" y="408" text-anchor="middle" font-size="9" fill="#64748b">C++ · ptrace · SIGTRAP · PTRACE_GETREGS · macOS + Linux x86-64</text>
 </svg>
 ```

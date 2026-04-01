@@ -6,24 +6,24 @@ The CPU Profiler is a three-layer system:
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│ User Code (Python)                                         │
-│ - @profile_function decorator                              │
-│ - with profiler_context():                                 │
-│ - profiler.start() / .stop()                               │
+│ User Code (Python) │
+│ - @profile_function decorator │
+│ - with profiler_context(): │
+│ - profiler.start() / .stop() │
 └────────────────────────┬─────────────────────────────────┘
-                         │
+ │
 ┌────────────────────────▼─────────────────────────────────┐
-│ Python API Layer (profiler_binding.py)                    │
-│ - CPUProfiler class (ctypes interface)                    │
-│ - FlameGraphConverter (JSON export)                       │
-│ - ProfileReport (human-readable summaries)                │
+│ Python API Layer (profiler_binding.py) │
+│ - CPUProfiler class (ctypes interface) │
+│ - FlameGraphConverter (JSON export) │
+│ - ProfileReport (human-readable summaries) │
 └────────────────────────┬─────────────────────────────────┘
-                         │
+ │
 ┌────────────────────────▼─────────────────────────────────┐
-│ C Core (profiler.c, libprofiler.dylib)                   │
-│ - Sampling thread                                         │
-│ - Stack capture & deduplication                           │
-│ - Instruction/memory metrics                              │
+│ C Core (profiler.c, libprofiler.dylib) │
+│ - Sampling thread │
+│ - Stack capture & deduplication │
+│ - Instruction/memory metrics │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -33,17 +33,17 @@ The CPU Profiler is a three-layer system:
 
 ```c
 void *sampler_main(void *arg) {
-    while (profiling) {
-        void *frames[MAX_FRAMES];
-        int frame_count = capture_stack(frames, MAX_FRAMES);
-        
-        StackSample *sample = find_or_create_sample(frames, frame_count);
-        sample->count++;
-        sample->instructions += get_instructions();
-        sample->memory_delta += get_memory_usage();
-        
-        usleep(SAMPLE_INTERVAL_US);  // 1ms default
-    }
+ while (profiling) {
+ void *frames[MAX_FRAMES];
+ int frame_count = capture_stack(frames, MAX_FRAMES);
+ 
+ StackSample *sample = find_or_create_sample(frames, frame_count);
+ sample->count++;
+ sample->instructions += get_instructions();
+ sample->memory_delta += get_memory_usage();
+ 
+ usleep(SAMPLE_INTERVAL_US); // 1ms default
+ }
 }
 ```
 
@@ -58,18 +58,18 @@ void *sampler_main(void *arg) {
 
 ```c
 typedef struct {
-    void *frames[MAX_FRAMES];      // Return addresses
-    int frame_count;               // Stack depth
-    uint64_t count;                // Sample count
-    uint64_t instructions;         // CPU instructions
-    uint64_t memory_delta;         // Memory change
+ void *frames[MAX_FRAMES]; // Return addresses
+ int frame_count; // Stack depth
+ uint64_t count; // Sample count
+ uint64_t instructions; // CPU instructions
+ uint64_t memory_delta; // Memory change
 } StackSample;
 
 typedef struct {
-    StackSample samples[MAX_STACKS]; // Array of unique stacks
-    int sample_count;                // Number of unique stacks
-    uint64_t total_samples;          // Total samples captured
-    // ...
+ StackSample samples[MAX_STACKS]; // Array of unique stacks
+ int sample_count; // Number of unique stacks
+ uint64_t total_samples; // Total samples captured
+ // ...
 } ProfilerState;
 ```
 
@@ -89,17 +89,17 @@ typedef struct {
 
 ```python
 class CPUProfiler:
-    def __init__(self, lib_path=None):
-        self.lib = load_profiler_lib(lib_path)
-        # Maps C functions to Python
-        
-    def start(self) -> bool:
-        result = self.lib.profiler_start()
-        return result == 0
-    
-    def stop(self) -> bool:
-        result = self.lib.profiler_stop()
-        return result == 0
+ def __init__(self, lib_path=None):
+ self.lib = load_profiler_lib(lib_path)
+ # Maps C functions to Python
+ 
+ def start(self) -> bool:
+ result = self.lib.profiler_start()
+ return result == 0
+ 
+ def stop(self) -> bool:
+ result = self.lib.profiler_stop()
+ return result == 0
 ```
 
 ### Flame Graph Conversion
@@ -109,12 +109,12 @@ Converts profiler JSON to flame graph text format:
 **Input (JSON):**
 ```json
 {
-  "frames": [
-    {"symbol": "main"},
-    {"symbol": "process"},
-    {"symbol": "malloc"}
-  ],
-  "count": 100
+ "frames": [
+ {"symbol": "main"},
+ {"symbol": "process"},
+ {"symbol": "malloc"}
+ ],
+ "count": 100
 }
 ```
 
@@ -132,7 +132,7 @@ Compatible with `flamegraph.pl` visualization tool.
 ```python
 @profile_function(output_dir="./results")
 def my_func():
-    pass
+ pass
 ```
 
 **Steps:**
@@ -147,10 +147,10 @@ def my_func():
 
 ```
 ProfileReport
-├── print_summary()      # Elapsed time, sample count
-├── print_hot_paths()    # Top 15 call stacks
+├── print_summary() # Elapsed time, sample count
+├── print_hot_paths() # Top 15 call stacks
 ├── print_memory_stats() # Allocation hotspots
-└── print_instruction_stats()  # CPU work hotspots
+└── print_instruction_stats() # CPU work hotspots
 ```
 
 ## Performance Characteristics
@@ -196,17 +196,17 @@ $ du -h libprofiler.dylib
 
 ```
 profiler/
-├── profiler.c              (250 LOC) - Core C implementation
-├── profiler_binding.py     (270 LOC) - Python ctypes wrapper
-├── profiler_cli.py         (350 LOC) - CLI & reporting
-├── example_usage.py        (180 LOC) - Usage examples
-├── test_profiler.py        (200 LOC) - Test suite
-├── Makefile                 (30 LOC) - Build configuration
-├── build.sh                 (50 LOC) - Build script
-├── libprofiler.dylib              - Compiled extension
-├── README.md                      - Full documentation
-├── QUICKSTART.md                  - Getting started
-└── ARCHITECTURE.md                - This file
+├── profiler.c (250 LOC) - Core C implementation
+├── profiler_binding.py (270 LOC) - Python ctypes wrapper
+├── profiler_cli.py (350 LOC) - CLI & reporting
+├── example_usage.py (180 LOC) - Usage examples
+├── test_profiler.py (200 LOC) - Test suite
+├── Makefile (30 LOC) - Build configuration
+├── build.sh (50 LOC) - Build script
+├── libprofiler.dylib - Compiled extension
+├── README.md - Full documentation
+├── QUICKSTART.md - Getting started
+└── ARCHITECTURE.md - This file
 ```
 
 **Total: ~730 lines of Python + C**
@@ -216,18 +216,18 @@ profiler/
 ### Why Sampling vs Instrumentation?
 
 **Sampling:**
-- ✓ Low overhead
-- ✓ Works with any code
-- ✓ Captures real execution
-- ✗ Misses short-lived code
-- ✗ Statistical
+- [x] Low overhead
+- [x] Works with any code
+- [x] Captures real execution
+- [ ] Misses short-lived code
+- [ ] Statistical
 
 **Instrumentation:**
-- ✓ Exact measurements
-- ✓ Sees all calls
-- ✗ High overhead
-- ✗ Requires code changes
-- ✗ Distorts measurements
+- [x] Exact measurements
+- [x] Sees all calls
+- [ ] High overhead
+- [ ] Requires code changes
+- [ ] Distorts measurements
 
 ### Why C + Python?
 
@@ -256,7 +256,7 @@ profiler/
 In `profiler.c`:
 ```c
 typedef struct {
-    uint64_t custom_metric;
+ uint64_t custom_metric;
 } StackSample;
 
 // Capture your metric
@@ -267,27 +267,27 @@ In `profiler_binding.py`:
 ```python
 # Access in JSON export
 for stack in data['stacks']:
-    custom = stack.get('custom_metric')
+ custom = stack.get('custom_metric')
 ```
 
 ### Increase Sample Rate
 
 In `profiler.c`:
 ```c
-#define SAMPLE_INTERVAL_US 500  // 0.5ms instead of 1ms
+#define SAMPLE_INTERVAL_US 500 // 0.5ms instead of 1ms
 ```
 
 Trade-off: More samples = higher accuracy but higher overhead.
 
 ### Add Memory Profiling
 
-Current: Peak RSS only  
+Current: Peak RSS only 
 Possible: Track allocations/deallocations
 
 ```c
 void *malloc_hook(size_t size) {
-    sample->allocations++;
-    sample->allocated_bytes += size;
+ sample->allocations++;
+ sample->allocated_bytes += size;
 }
 ```
 
@@ -330,12 +330,12 @@ void *malloc_hook(size_t size) {
 ## Testing Strategy
 
 ```python
-test_basic_profiling()      # Can start/stop?
-test_json_output()          # Valid JSON?
-test_summary_output()       # File created?
+test_basic_profiling() # Can start/stop?
+test_json_output() # Valid JSON?
+test_summary_output() # File created?
 test_flamegraph_conversion()# Correct format?
-test_profile_report()       # Data readable?
-test_multiple_profiles()    # Reusable?
+test_profile_report() # Data readable?
+test_multiple_profiles() # Reusable?
 ```
 
 Run: `python3 test_profiler.py`
@@ -354,9 +354,9 @@ fprintf(stderr, "Sample %d: %d frames\n", count, frame_count);
 ```c
 // Print each sample as captured
 for (int j = 0; j < frame_count; j++) {
-    Dl_info info;
-    dladdr(frames[j], &info);
-    printf("%s\n", info.dli_sname ?: "?");
+ Dl_info info;
+ dladdr(frames[j], &info);
+ printf("%s\n", info.dli_sname ?: "?");
 }
 ```
 

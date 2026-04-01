@@ -1,73 +1,73 @@
 ===================================
-✓ MINIMAL DEBUGGER - COMPLETE
+[x] MINIMAL DEBUGGER - COMPLETE
 ===================================
 
-BUILD STATUS: SUCCESS ✓
+BUILD STATUS: SUCCESS [x]
 
 Time: ~1 hour
 Lines of Code: 380 total
-  - debugger.h: 45 lines
-  - debugger.cpp: 320 lines  
-  - main.cpp: 15 lines
-  
+ - debugger.h: 45 lines
+ - debugger.cpp: 320 lines 
+ - main.cpp: 15 lines
+ 
 Binary Size: 46 KB (unstripped)
 
-TEST PROGRAM: Built ✓
-  - test_prog: 33 KB
+TEST PROGRAM: Built [x]
+ - test_prog: 33 KB
 
 ===================================
 FEATURES IMPLEMENTED
 ===================================
 
-✓ Process execution (fork/execv)
-✓ ptrace integration
-✓ INT3 breakpoints
-✓ Single-step execution
-✓ Register inspection (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
-✓ Memory reading/writing
-✓ REPL command interface
+[x] Process execution (fork/execv)
+[x] ptrace integration
+[x] INT3 breakpoints
+[x] Single-step execution
+[x] Register inspection (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, rip)
+[x] Memory reading/writing
+[x] REPL command interface
 
 ===================================
 COMMANDS WORKING
 ===================================
 
-✓ run              - Start program
-✓ break <addr>     - Set breakpoint
-✓ continue (c)     - Resume execution
-✓ step (s)         - Single step
-✓ print $reg       - Print register
-✓ print *addr      - Print memory
-✓ help             - Show help
-✓ quit             - Exit
+[x] run - Start program
+[x] break <addr> - Set breakpoint
+[x] continue (c) - Resume execution
+[x] step (s) - Single step
+[x] print $reg - Print register
+[x] print *addr - Print memory
+[x] help - Show help
+[x] quit - Exit
 
 ===================================
 FILE STRUCTURE
 ===================================
 
 debugger/
-├── debugger        (46 KB executable)
-├── test_prog       (33 KB test binary)
-├── debugger.h      (45 lines)
-├── debugger.cpp    (320 lines)
-├── main.cpp        (15 lines)
-├── test.c          (Simple test program)
-├── Makefile        (Build configuration)
-├── README.md       (Usage guide)
-├── QUICKSTART.md   (Quick reference)
-└── DONE.txt        (This file)
+├── debugger (46 KB executable)
+├── test_prog (33 KB test binary)
+├── debugger.h (45 lines)
+├── debugger.cpp (320 lines)
+├── main.cpp (15 lines)
+├── test.c (Simple test program)
+├── Makefile (Build configuration)
+├── README.md (Usage guide)
+├── QUICKSTART.md (Quick reference)
+└── DONE.txt (This file)
 
 ===================================
 BUILD COMMANDS
 ===================================
 
 Build:
-  $ make clean && make
+ $ make clean && make
 
 Run:
-  $ ./debugger ./test_prog
+ $ ./debugger ./test_prog
 
 Clean:
-  $ make clean
+ $ make clean
 
 ===================================
 QUICK TEST
@@ -77,13 +77,13 @@ $ cd ~/Documents/Code/debugger
 $ make
 $ ./debugger ./test_prog
 
-(dbg) run           # Program loads
-(dbg) help          # Show commands
-(dbg) break 0x100003d40   # Set breakpoint
-(dbg) continue      # Run to breakpoint
-(dbg) print $rax    # Check register
-(dbg) step          # Single step
-(dbg) quit          # Exit
+(dbg) run # Program loads
+(dbg) help # Show commands
+(dbg) break 0x100003d40 # Set breakpoint
+(dbg) continue # Run to breakpoint
+(dbg) print $rax # Check register
+(dbg) step # Single step
+(dbg) quit # Exit
 
 ===================================
 KNOWN LIMITATIONS
@@ -100,34 +100,34 @@ KNOWN LIMITATIONS
 WHAT'S WORKING
 ===================================
 
-✓ Compiles cleanly (no errors, minimal warnings)
-✓ Runs on macOS & Linux (x86-64)
-✓ Test program included
-✓ All core commands implemented
-✓ Ready to extend
+[x] Compiles cleanly (no errors, minimal warnings)
+[x] Runs on macOS & Linux (x86-64)
+[x] Test program included
+[x] All core commands implemented
+[x] Ready to extend
 
 ===================================
 NEXT STEPS
 ===================================
 
 1. Test with your own programs:
-   $ gcc -g -O0 -o myprog myprog.c
-   $ ./debugger ./myprog
+ $ gcc -g -O0 -o myprog myprog.c
+ $ ./debugger ./myprog
 
 2. Add features:
-   - Symbol resolution (integrate 'nm')
-   - Backtrace support
-   - Disassembly
-   - Watch expressions
-   - Multi-threading
+ - Symbol resolution (integrate 'nm')
+ - Backtrace support
+ - Disassembly
+ - Watch expressions
+ - Multi-threading
 
 3. Improve UI:
-   - Command history
-   - Better error messages
-   - Completion
+ - Command history
+ - Better error messages
+ - Completion
 
 ===================================
-STATUS: READY TO USE ✓
+STATUS: READY TO USE [x]
 ===================================
 
 This is a minimal, functional debugger that handles the essentials.
@@ -137,6 +137,6 @@ Total development time: ~1 hour
 All objectives met on schedule.
 
 Usage:
-  ./debugger <program>
+ ./debugger <program>
 
 Built: Feb 12, 2025
