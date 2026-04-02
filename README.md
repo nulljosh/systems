@@ -2,7 +2,7 @@
 
 # Systems
 
-![version](https://img.shields.io/badge/version-v2.0.0-blue)
+![version](https://img.shields.io/badge/version-v2.0.1-blue)
 
 Low-level systems programming monorepo. Compilers, operating systems, shells, debuggers, profilers.
 
