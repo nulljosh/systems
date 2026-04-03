@@ -4,7 +4,7 @@
 
 ![version](https://img.shields.io/badge/version-v0.1.0-blue)
 
-A Python source code static analyzer — lint-like tool that catches bugs without running code.
+A Python source code static analyzer  --  lint-like tool that catches bugs without running code.
 
 ## Scope
 - Parse Python source into AST
@@ -27,7 +27,7 @@ A Python source code static analyzer — lint-like tool that catches bugs withou
 
 ```svg
 <svg viewBox="0 0 680 420" width="680" height="420" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;background:#f8fafc;border-radius:12px">
-  <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">static-analyzer — Python Source Code Analyzer</text>
+  <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">static-analyzer  --  Python Source Code Analyzer</text>
 
   <!-- Root node -->
   <rect x="250" y="48" width="180" height="36" rx="8" fill="#0071e3"/>

@@ -2,7 +2,7 @@
 
 ## Dependencies
 - Python 3.10+
-- Unix-like OS (macOS/Linux) — uses `os.fork`, `os.execvp`
+- Unix-like OS (macOS/Linux)  --  uses `os.fork`, `os.execvp`
 
 ## Install
 ```bash

@@ -25,9 +25,9 @@ def my_function():
 ```
 
 ## Key Files
-- `profiler.c` / `profiler.h` — C extension (sampling, perf counters)
-- `profiler_binding.py` — Python bindings
-- `profiler_cli.py` — CLI and decorator API
+- `profiler.c` / `profiler.h`  --  C extension (sampling, perf counters)
+- `profiler_binding.py`  --  Python bindings
+- `profiler_cli.py`  --  CLI and decorator API
 
 ## Status
 Done/stable. 730 LOC.

@@ -1384,7 +1384,7 @@ make clean && make
 ```svg
 <svg viewBox="0 0 680 420" width="680" height="420" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;background:#f8fafc;border-radius:12px">
  <!-- Title -->
- <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">profiler — CPU Profiler for Python + C</text>
+ <text x="340" y="28" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">profiler  --  CPU Profiler for Python + C</text>
 
  <!-- Root node -->
  <rect x="270" y="44" width="140" height="34" rx="8" fill="#0071e3"/>

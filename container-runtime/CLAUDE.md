@@ -4,7 +4,7 @@
 Minimal Linux container runtime. Namespaces, cgroups, filesystem isolation. Rust + C FFI.
 
 ## Stack
-Rust (unsafe), C FFI, Linux syscalls (not macOS-native — needs Linux VM or Docker)
+Rust (unsafe), C FFI, Linux syscalls (not macOS-native  --  needs Linux VM or Docker)
 
 ## Build
 ```bash
