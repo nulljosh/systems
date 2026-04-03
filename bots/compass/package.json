@@ -1,0 +1,17 @@
+{
+  "name": "compass-bot",
+  "version": "1.0.0",
+  "description": "BC Compass Card balance checker and trip history",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "balance": "node cli.js balance",
+    "trips": "node cli.js trips",
+    "test": "node --test test.js"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0",
+    "csv-parse": "^5.6.0"
+  },
+  "license": "MIT"
+}

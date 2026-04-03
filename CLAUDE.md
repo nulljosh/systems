@@ -42,7 +42,7 @@ From-scratch implementations. Compiler, OS, networking, graphics, AI, and more.
 - **visual-recognition** -- CNN image classifier from scratch (Python)
 
 ### Other
-- **bots** -- Bot scaffolds
+- **bots/** -- Node.js bots: compass (navigation), dominos (ordering), weedbot (strain tracker)
 - **jot** -- Jot language (see standalone jot repo for latest)
 - **stubs** -- Build-your-own scaffolds
 
