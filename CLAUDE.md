@@ -1,6 +1,6 @@
 # Systems
 
-v2.0.1
+v3.0.0
 
 From-scratch implementations. Compiler, OS, networking, graphics, AI, and more.
 
